@@ -35,6 +35,7 @@ function Card({ size, icon, title, description, onClick }: CardProps) {
         >
           <>
             <CardContent
+              className="card"
               sx={{
                 padding: "1rem",
                 textAlign: "left",

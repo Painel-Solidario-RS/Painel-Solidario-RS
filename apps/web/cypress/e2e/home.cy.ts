@@ -3,6 +3,7 @@
 import { options, services } from '../fixtures/services.json'
 
 describe('Home Page', () => {
+  beforeEach(() => cy.visit('/home'))
 
   options.forEach((o) => {
     it.skip(`should display ${o.name} option`, () => {
@@ -11,8 +12,8 @@ describe('Home Page', () => {
   })
 
   services.forEach((s) => {
-    it.skip(`should display ${s.name} service`, () => {
-      cy.get(`[data-test="${s.name}"]`).should('be.visible')
+    it(`should display ${s.name} service`, () => {
+      cy.get('.card').contains(s.name).should('be.visible')
     })
   })
 
