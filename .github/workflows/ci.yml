@@ -87,6 +87,11 @@ jobs:
           cache-modules: true
           install: true
 
+      - name: Start test server
+        run: |
+          cd apps/web
+          docker-compose up -d web
+
       - name: Run tests
         uses: cypress-io/github-action@v6
         with:
