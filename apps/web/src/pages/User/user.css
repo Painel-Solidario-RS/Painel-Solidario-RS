@@ -1,0 +1,57 @@
+.user-container{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.user-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px;
+}
+
+.user-subtitle {
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.user-title-description{
+    display: flex;
+    font-size: 1em;
+    text-align: left;
+    line-height: 24px;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.form-user-description{
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    box-shadow: -1px 1px 4px #afafaf;
+}
+
+.user-info-fields{
+    padding: 0px 12px 0px 12px;
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+}
+
+.user-type-container{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.user-type{
+    display: flex;
+    flex-direction: row;
+}

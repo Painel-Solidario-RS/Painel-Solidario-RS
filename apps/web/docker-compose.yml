@@ -1,0 +1,18 @@
+# networks:
+#   painelsolidariors:
+#     external:
+#       name: painelsolidariors
+
+services:
+  web:
+    container_name: web
+    build: .
+    restart: unless-stopped
+    ports:
+      # - 0.0.0.0:443:443
+      - 0.0.0.0:3000:3000
+    # volumes:
+    #   - /etc/ssl/certs/painelsolidario.feevale.br.crt:/etc/nginx/certs/painelsolidario.feevale.br.crt:ro
+    #   - /etc/ssl/private/painelsolidario.feevale.br.key:/etc/nginx/certs/painelsolidario.feevale.br.key:ro
+    # networks:
+    #   - painelsolidariors

@@ -1,0 +1,46 @@
+.splash {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--green);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.project-logo {
+    max-width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feevale-logo {
+    max-width: 150px;
+}
+
+.line {
+    width: 100%;
+    max-width: 100px;
+    height: 2px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--green);
+    color: white;
+    text-align: center;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding-bottom: 2em;
+}

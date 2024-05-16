@@ -1,4 +1,4 @@
-name: API
+name: CI
 on:
   push:
     branches: ["production"]
@@ -80,7 +80,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Docker Compose - Update containers
+      - name: Docker Compose - Update Web
+        run: |
+          cd apps/web
+          docker compose up --build -d
+
+      - name: Docker Compose - Update API
         run: |
           cd apps/api
           docker compose up --build -d

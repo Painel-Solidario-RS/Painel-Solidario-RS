@@ -1,0 +1,58 @@
+.shelter-container{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+}
+
+.shelter-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 12px;
+}
+
+.shelter-subtitle {
+    display: flex;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.shelter-title-description{
+    display: flex;
+    font-size: 1em;
+    text-align: left;
+    line-height: 24px;
+}
+
+.shelter-info{
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.form-shelter-description{
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+    box-shadow: -1px 1px 4px #afafaf;
+}
+
+.shelter-info-fields{
+    padding: 0px 12px 0px 12px;
+    flex-direction: column;
+    display: flex;
+    flex: 1;
+}
+
+/* tipo de abrigo */
+.shelter-type-container{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.shelter-type{
+    display: flex;
+    flex-direction: row;
+}
