@@ -1,0 +1,37 @@
+# Builder
+FROM node:20-alpine as builder
+
+ENV NODE_ENV build
+
+USER node
+WORKDIR /home/node
+
+COPY --chown=node:node ./package*.json ./
+RUN npm install
+
+COPY --chown=node:node ./ .
+RUN npm run build
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "preview" ]
+
+# # Release
+# FROM nginx:stable-alpine AS release
+
+# RUN rm -rf /usr/share/nginx/html/*
+
+# COPY --from=builder --chown=node:node /home/node/dist /usr/share/nginx/html
+
+# # Create certificate folder
+# RUN mkdir -p /etc/nginx/certs
+
+# # Replace NGINX configuration
+# RUN rm /etc/nginx/nginx.conf
+# COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+
+# # Replace site config
+# RUN rm /etc/nginx/conf.d/default.conf
+# COPY nginx/reverse-proxy.conf /etc/nginx/conf.d/default.conf
+
+# CMD ["nginx", "-g", "daemon off;"]

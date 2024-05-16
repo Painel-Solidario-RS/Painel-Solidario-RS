@@ -1,0 +1,66 @@
+:root {
+  --green: #036c03; /* cor principal, usada em botões, icones verdes e alguns backgrounds */
+
+  --light-green: #d8fee3; /* cor de botões com verde claro, por exemplo AddButton */
+
+  --dark-text: #000000; /* Títulos e descrições */
+
+  --hard-light-gray: #f4f6f8; /* bg de titulos de cadastro, por exemplo "Informações do abrigo" */
+  --light-gray: #c5c7ca; /* Bordas de inputs */
+  --medium-light-gray: #f4f4f4; /* Botões/Opções/Itens selecionados */
+  --gray: #aaacae; /* Títulos e descrições */
+  --medium-gray: #787579; /* labels claras do cadastro */
+  --dark-gray: #484649; /* labels e ícones de combo buttons */
+
+  --white: #ffffff; /* cor de texto em contraste com o green */
+
+  --pink: #e05353; /* círculo emergencial */
+  --blue: #0070D1; /* links */
+}
+
+html {
+  font-family: Roboto, sans-serif;
+  display: flex;
+}
+
+.green-color {
+  color: var(--green) !important;
+}
+
+.green-background-color {
+  background-color: var(--green) !important;
+}
+
+.white-color {
+  color: var(--white) !important;
+}
+
+.white-background-color {
+  background-color: var(--white) !important;
+}
+
+.green-board-color {
+  border: var(--green);
+  border-width: 1px;
+}
+
+.label-input {
+  color: var(--dark-gray);
+  font-weight: "bold";
+}
+
+.bg-hard-light-gray {
+  background-color: var(--hard-light-gray);
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+.label-blue{
+  color: var(--blue);
+}
