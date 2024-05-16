@@ -1,0 +1,10 @@
+/packages/* @Painel-Solidario-RS/Architecture
+/.vscode/ @Painel-Solidario-RS/Architecture
+
+/.github/ @Painel-Solidario-RS/Infra
+/.docker/ @Painel-Solidario-RS/Infra
+/nginx/ @Painel-Solidario-RS/Infra
+
+/apps/web/ @Painel-Solidario-RS/Frontend
+
+/apps/api/ @Painel-Solidario-RS/Backend
