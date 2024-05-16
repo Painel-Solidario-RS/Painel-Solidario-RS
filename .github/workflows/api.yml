@@ -1,0 +1,93 @@
+name: API
+on:
+  push:
+    branches: ["production"]
+  pull_request:
+      branches: '**'
+
+jobs:
+  code-check:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.check == 'ts' && 'TypeScript' || 'Code Lint' }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        check: ['ts', 'lint']
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Code Lint
+        if: matrix.check == 'lint'
+        run: |
+          npm run lint
+
+      - name: Code TypeCheck
+        if: matrix.check == 'ts'
+        run: |
+          npm run typecheck
+
+  test:
+    name: "Run Tests"
+    runs-on: ubuntu-latest
+    # if: ${{ vars.RUN_TESTS  == 'true' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run tests
+        run: |
+          npm test
+
+  build-container:
+    name: "Build container"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Docker Compose Build
+        run: |
+          cd apps/api
+          docker compose build
+
+  deploy:
+    name: "Deploy app"
+    runs-on: [self-hosted, production, painel-solidario-rs]
+    needs: [test, build-container]
+    if: github.ref == 'refs/heads/production'
+    # if: ${{ always() && !failure() && !cancelled() }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Docker Compose - Update containers
+        run: |
+          cd apps/api
+          docker compose up --build -d
+        env:
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ vars.POSTGRES_USER }}
+          POSTGRES_DB: ${{ vars.POSTGRES_DB }}
+          POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ vars.POSTGRES_PORT }}
+          NODE_ENV: ${{ vars.NODE_ENV }}
