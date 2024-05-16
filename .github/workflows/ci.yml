@@ -57,12 +57,14 @@ jobs:
 
   test-web:
     name: "Web Tests"
-    runs-on: macos-latest-large
+    runs-on: ubuntu-latest
+    # runs-on: macos-latest-large
 
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox, edge, webkit] #webkit is only available on macOS and emulates Safari
+        browser: [chrome, firefox, edge]
+        # browser: [chrome, firefox, edge, webkit] #webkit is only available on macOS and emulates Safari
 
     steps:
       - name: Checkout code
@@ -105,7 +107,7 @@ jobs:
   deploy:
     name: "Deploy app"
     runs-on: [self-hosted, production, painel-solidario-rs]
-    needs: [test, build-container]
+    needs: [test-api, test-web, build-container]
     if: github.ref == 'refs/heads/production'
     # if: ${{ always() && !failure() && !cancelled() }}
     steps:
