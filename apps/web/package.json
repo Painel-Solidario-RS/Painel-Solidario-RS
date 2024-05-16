@@ -8,8 +8,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "typecheck": "tsc --noEmit",
     "test": "cypress run",
-    "preview": "vite preview",
-    "preview:web": "vite preview"
+    "preview": "vite preview"
   },
   "engines": {
     "node": ">=20.13",

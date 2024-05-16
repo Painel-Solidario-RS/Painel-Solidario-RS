@@ -18,10 +18,6 @@
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "preview:web": {
-      "cache": false,
-      "persistent": true
     }
   }
 }
