@@ -1,0 +1,33 @@
+{
+  "options": [
+    {
+      "name": "Cadastrar"
+    },
+    {
+      "name": "Entrar"
+    }
+  ],
+  "services": [
+    {
+      "name": "Doações"
+    },
+    {
+      "name": "Abrigos"
+    },
+    {
+      "name": "Pontos de Coleta"
+    },
+    {
+      "name": "Monitoramento"
+    },
+    {
+      "name": "Perfil"
+    },
+    {
+      "name": "Necessidades"
+    },
+    {
+      "name": "Gestão"
+    }
+  ]
+}
