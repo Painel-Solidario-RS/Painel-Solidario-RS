@@ -10,6 +10,10 @@
     "test": "cypress run",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": ">=20.13",
+    "npm": ">=10.5"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
