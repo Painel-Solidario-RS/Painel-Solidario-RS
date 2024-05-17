@@ -2,6 +2,8 @@
 #   painelsolidariors:
 #     external:
 #       name: painelsolidariors
+volumes:
+  psql:
 
 services:
   web:
@@ -32,3 +34,15 @@ services:
       POSTGRES_HOST: "${POSTGRES_HOST}"
       POSTGRES_PORT: "${POSTGRES_PORT}"
       NODE_ENV: "${NODE_ENV}"
+
+  psql:
+    image: postgres # this uses the 'latest' version
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # only do this in development
+      POSTGRES_DB: app
+    volumes:
+      - psql:/var/lib/postgresql/data # save data between restarts
+      - ./psql_init:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432

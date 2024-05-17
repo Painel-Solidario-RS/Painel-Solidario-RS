@@ -7,11 +7,14 @@ export default defineConfig({
   preview: {
     port: 3000,
     strictPort: true,
-   },
-   server: {
+  },
+  server: {
     port: 3000,
     strictPort: true,
     host: true,
-    origin: "http://0.0.0.0:3000",
-   },
+    origin: "http://localhost:3000",
+    proxy: {
+      '/api': 'http://localhost:4000',
+    },
+  },
 })
