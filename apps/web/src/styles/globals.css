@@ -52,7 +52,9 @@ html {
 .bg-hard-light-gray {
   background-color: var(--hard-light-gray);
 }
-
+.dark-base-color{
+  color: var(--dark-gray) !important;
+}
 body {
   margin: 0;
   width: 100%;
