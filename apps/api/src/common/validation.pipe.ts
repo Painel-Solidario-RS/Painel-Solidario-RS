@@ -1,16 +1,17 @@
 import {
-  PipeTransform,
-  Injectable,
   ArgumentMetadata,
   BadRequestException,
+  Injectable,
+  PipeTransform,
+  Type,
 } from '@nestjs/common';
-import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    if (!metatype || !this.toValidate(metatype)) {
+    if (!metatype || ValidationPipe.skippedTypes.includes(metatype)) {
       return value;
     }
     const object = plainToInstance(metatype, value);
@@ -21,15 +22,11 @@ export class ValidationPipe implements PipeTransform<any> {
     return value;
   }
 
-  private toValidate(
-    metatype:
-      | StringConstructor
-      | BooleanConstructor
-      | NumberConstructor
-      | ArrayConstructor
-      | ObjectConstructor,
-  ): boolean {
-    const types = [String, Boolean, Number, Array, Object];
-    return !types.includes(metatype);
-  }
+  private static skippedTypes: Type[] = [
+    String,
+    Boolean,
+    Number,
+    Array,
+    Object,
+  ];
 }
