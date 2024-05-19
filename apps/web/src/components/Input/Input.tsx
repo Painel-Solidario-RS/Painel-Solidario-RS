@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Divider,
   FormControl,
   FormLabel,
   IconButton,
@@ -20,7 +21,7 @@ type InputProps = {
   error?: boolean
   helperText?: string
   link?: string
-  icon?: ReactElement<null, string | JSXElementConstructor<null>> | undefined
+  icon?: ReactElement<string | JSXElementConstructor<string>> | undefined
 }
 
 const Input: React.FC<InputProps> = ({ label, placeholder, icon, type }) => {
@@ -39,15 +40,18 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, type }) => {
         width: '100%'
       }}
     >
+      <br />
       <Box sx={{ paddingLeft: '21px', paddingRight: '26px' }}>
         {type == 'text' && (
           <FormLabel
             sx={{
               fontSize: '12px',
               fontWeight: '700',
-              lineHeight: '28px',
+              lineHeight: '16px',
               textAlign: 'left',
+              height: 'Hug (24px)',
               color: '#484649',
+              paddingBottom: '8px',
               padding: '1px 1px 1px 1px '
             }}
           >
@@ -95,7 +99,10 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, type }) => {
             }}
             onClick={handleButtonClick}
           >
-            <Box component="span" sx={{ flexGrow: 1, textAlign: 'left' }}>
+            <Box
+              component="span"
+              sx={{ flexGrow: 1, textAlign: 'left', color: '#484649' }}
+            >
               {label}
             </Box>
             <Checkbox
