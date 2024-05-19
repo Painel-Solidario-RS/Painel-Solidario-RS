@@ -10,4 +10,7 @@ export const PostgresDataSource = new DataSource({
   database: process.env.POSTGRES_DB,
   entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: false,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
