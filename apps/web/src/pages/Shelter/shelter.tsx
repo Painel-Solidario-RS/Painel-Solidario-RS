@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import BasePage from '../../components/common/BasePage'
 import './shelter.css'
 import Input from '../../components/Input/Input'
-import { Checkbox, FormControl, FormLabel } from '@mui/material'
+import { Box, Checkbox, FormControl, FormLabel } from '@mui/material'
 import SelectInput from '../../components/SelectInput/SelectInput'
 import { DividerTextual } from '../../components/Divider/DividerTextual'
 import SearchSharpIcon from '@mui/icons-material/SearchSharp'
@@ -28,11 +28,27 @@ function Shelter() {
         <div className="shelter-info-fields">
           {/* nome */}
           <div className="shelter-flex">
-            <Input label="Nome" placeholder="Nome e Sobrenome" />
+            <Input type="text" label="Nome" placeholder="Nome e Sobrenome" />
           </div>
 
           <div className="shelter-type-container">
-            <p>Tipo de abrigo</p>
+            <br />
+            <Box sx={{ paddingLeft: '21px', paddingRight: '26px' }}>
+              <FormLabel
+                sx={{
+                  fontSize: '12px',
+                  fontWeight: '700',
+                  lineHeight: '16px',
+                  textAlign: 'left',
+                  height: 'Hug (24px)',
+                  color: '#484649',
+                  paddingBottom: '8px',
+                  padding: '1px 1px 1px 1px '
+                }}
+              >
+                Tipo de abrigo
+              </FormLabel>
+            </Box>
             <div className="shelter-type">
               <FormControl
                 fullWidth
@@ -73,12 +89,17 @@ function Shelter() {
           />
           {/* <Select/> */}
           {/* Telefone (Whatsapp) */}
-          <Input label="Telefone (Whatsapp)" placeholder="(00) 00000-0000" />
+          <Input
+            type="text"
+            label="Telefone (Whatsapp)"
+            placeholder="(00) 00000-0000"
+          />
         </div>
 
         <DividerTextual title="Endereço" />
         <div className=" shelter-info-fields">
           <Input
+            type="text"
             label="CEP"
             placeholder="Selecione a UF"
             icon={<SearchSharpIcon />}
@@ -95,20 +116,29 @@ function Shelter() {
           />
 
           {/* Endereço (logradouro) */}
-          <Input label="Endereço (logradouro)" placeholder="Ex. 7100000" />
+          <Input
+            type="text"
+            label="Endereço (logradouro)"
+            placeholder="Ex. 7100000"
+          />
           {/* Número */}
-          <Input label="Número" placeholder="Informe o número" />
+          <Input type="text" label="Número" placeholder="Informe o número" />
           {/* Complemento */}
-          <Input label="Complemento" placeholder="Complemento" />
+          <Input type="text" label="Complemento" placeholder="Complemento" />
           {/* Bairro */}
-          <Input label="Bairro" placeholder="Bairro" />
+          <Input type="text" label="Bairro" placeholder="Bairro" />
         </div>
         <DividerTextual title="Status de ocupação" />
         <div className="shelter-info-fields">
           {/* Capacidade Total */}
-          <Input label="Capacidade Total" placeholder="Quantidade de pessoas" />
+          <Input
+            type="text"
+            label="Capacidade Total"
+            placeholder="Quantidade de pessoas"
+          />
           {/* Número de vagas disponíveis */}
           <Input
+            type="text"
             label="Número de vagas disponíveis"
             placeholder="Voluntário Civil"
           />
