@@ -1,7 +1,10 @@
 name: CI
+
 on:
   push:
-    branches: ["production"]
+    branches:
+      - production
+      - main
   pull_request:
       branches: '**'
 
@@ -131,10 +134,19 @@ jobs:
         run: |
           docker compose build ${{ matrix.container }}
 
-      - name: Publish Docker image
+      - name: Publish Docker image (PR)
         if: github.event_name == 'pull_request'
         run: |
           GH_IMAGE_NAME="ghcr.io/painel-solidario-rs/painel-solidario-${{ matrix.container }}:pr-${{ github.event.number }}"
+
+          docker tag painel-solidario-rs-${{ matrix.container }} $GH_IMAGE_NAME
+
+          docker push $GH_IMAGE_NAME
+
+      - name: Publish Docker image (Main)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          GH_IMAGE_NAME="ghcr.io/painel-solidario-rs/painel-solidario-${{ matrix.container }}:develop"
 
           docker tag painel-solidario-rs-${{ matrix.container }} $GH_IMAGE_NAME
 
