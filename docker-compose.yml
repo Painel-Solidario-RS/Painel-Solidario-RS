@@ -35,8 +35,8 @@ services:
       traefik.http.services.api.loadbalancer.server.port: 4000
       traefik.http.routers.api.service: api
       traefik.http.routers.api.rule: PathPrefix(`/api`)
-    env_file:
-      - ./apps/api/.env
+    # env_file:
+    #   - ./apps/api/.env
     environment:
       POSTGRES_HOST: psql
 
