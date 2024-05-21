@@ -6,6 +6,8 @@
 
 .shelter-header{
     display: flex;
+    font-family: Rawline;
+    font-size: 16px;
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
@@ -20,7 +22,9 @@
 
 .shelter-title-description{
     display: flex;
-    font-size: 1em;
+    font-family: Roboto;
+    font-weight: 400;
+    font-size: 16px;
     text-align: left;
     line-height: 24px;
 }
