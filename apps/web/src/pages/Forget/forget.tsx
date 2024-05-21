@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import Input from '../../components/Input'
+import Input from '../../components/Input/Input'
 import GreenButton from '../../components/GreenButton'
 import WhiteButton from '../../components/WhiteButton'
 

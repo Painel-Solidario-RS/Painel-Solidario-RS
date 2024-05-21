@@ -7,7 +7,7 @@ import { Drawer, Grid, Link, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
 import './login.css'
 import BasePage from '../../components/common/BasePage'
-import Input from '../../components/Input'
+import Input from '../../components/Input/Input'
 import { useAuth } from '../../hooks/useAuth'
 import Forget from '../Forget/forget'
 
