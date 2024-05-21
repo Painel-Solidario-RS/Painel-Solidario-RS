@@ -1,7 +1,5 @@
-# networks:
-#   painelsolidariors:
-#     external:
-#       name: painelsolidariors
+volumes:
+  psql:
 
 services:
   web:
@@ -10,25 +8,55 @@ services:
       dockerfile: .docker/Dockerfile.web
       context: .
     restart: unless-stopped
-    ports:
-      - 3000:3000
-    # volumes:
-    #   - /etc/ssl/certs/painelsolidario.feevale.br.crt:/etc/nginx/certs/painelsolidario.feevale.br.crt:ro
-    #   - /etc/ssl/private/painelsolidario.feevale.br.key:/etc/nginx/certs/painelsolidario.feevale.br.key:ro
-    # networks:
-    #   - painelsolidariors
+    # ports:
+    #   - 3000:3000
+    depends_on:
+      - traefik
+    labels:
+      traefik.enable: true
+      traefik.http.services.web.loadbalancer.server.port: 3000
+      traefik.http.routers.web.service: web
+      traefik.http.routers.web.rule: PathPrefix(`/`)
 
   api:
     container_name: api
     build:
       dockerfile: .docker/Dockerfile.api
       context: .
-    ports:
-      - 4000:4000
+    # ports:
+    #   - 4000:4000
+    depends_on:
+      - traefik
+      - psql
+    links:
+      - psql
+    labels:
+      traefik.enable: true
+      traefik.http.services.api.loadbalancer.server.port: 4000
+      traefik.http.routers.api.service: api
+      traefik.http.routers.api.rule: PathPrefix(`/api`)
+    # env_file:
+    #   - ./apps/api/.env
     environment:
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_DB: "${POSTGRES_DB}"
-      POSTGRES_HOST: "${POSTGRES_HOST}"
-      POSTGRES_PORT: "${POSTGRES_PORT}"
-      NODE_ENV: "${NODE_ENV}"
+      POSTGRES_HOST: psql
+
+  psql:
+    image: postgres # this uses the 'latest' version
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # only do this in development
+      POSTGRES_DB: app
+    volumes:
+      - psql:/var/lib/postgresql/data # save data between restarts
+      - ./psql_init:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+
+  traefik:
+    image: traefik:v2.8
+    command:
+      - --providers.docker=true
+    ports:
+      - 3000:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
