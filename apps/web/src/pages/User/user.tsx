@@ -7,6 +7,7 @@ import Input from '../../components/Input/Input'
 import SearchIcon from '@mui/icons-material/Search'
 import { Checkbox, Divider, FormControlLabel } from '@mui/material'
 import SelectInput from '../../components/SelectInput/SelectInput'
+import { DividerTextual } from '../../components/Divider/DividerTextual'
 
 function User() {
   const navigate = useNavigate()
@@ -24,25 +25,29 @@ function User() {
         </div>
       </div>
       <div className="user-info">
-        <div className="form-user-description bg-hard-light-gray">
-          Informações pessoais
-        </div>
+        <DividerTextual title="Informações pessoais" />
         <div className="user-info-fields">
           {/* nome */}
           <div className="user-flex">
-            <Input label="Nome" placeholder="Nome e Sobrenome" />
-          </div>
-          <div className="user-flex">
-            <Input label="E-mail" placeholder="seuemail@email.com" />
-          </div>
-          <div className="user-flex">
-            <Input label="Telefone (Whatsapp)" placeholder="(00)00000-0000" />
-          </div>
-          <div className="user-flex">
-            <Input label="Telefone (Whatsapp)" placeholder="(00)00000-0000" />
+            <Input type="text" label="Nome" placeholder="Nome e Sobrenome" />
           </div>
           <div className="user-flex">
             <Input
+              type="text"
+              label="E-mail"
+              placeholder="seuemail@email.com"
+            />
+          </div>
+          <div className="user-flex">
+            <Input
+              type="text"
+              label="Telefone (Whatsapp)"
+              placeholder="(00)00000-0000"
+            />
+          </div>
+          <div className="user-flex">
+            <Input
+              type="text"
               label="Ocupação"
               placeholder="Profissional de saúde"
               icon={<SearchIcon />}
@@ -61,9 +66,10 @@ function User() {
           {/* <Select/> */}
         </div>
 
-        <div className="form-user-description bg-hard-light-gray">Endereço</div>
+        <DividerTextual title="Endereço" />
         <div className=" user-info-fields">
           <Input
+            type="text"
             label="CEP"
             placeholder="Selecione a UF"
             icon={<SearchIcon />}
@@ -80,18 +86,25 @@ function User() {
           />
 
           {/* Endereço (logradouro) */}
-          <Input label="Endereço (logradouro)" placeholder="Ex. Rua ABC" />
+          <Input
+            type="text"
+            label="Endereço (Logradouro)"
+            placeholder="Ex. Rua ABC"
+          />
           {/* Número */}
-          <Input label="Número" placeholder="Ex. 7100000" />
+          <Input type="text" label="Número" placeholder="Ex. 7100000" />
           {/* Complemento */}
-          <Input label="Complemento" placeholder="Ex. Complemento" />
+          <Input
+            type="text"
+            label="Complemento"
+            placeholder="Ex. Complemento"
+          />
           {/* Bairro */}
-          <Input label="Bairro" placeholder="Ex. Centro" />
+          <Input type="text" label="Bairro" placeholder="Ex. Centro" />
         </div>
 
-        <div className="form-user-description bg-hard-light-gray">
-          Como quer ajudar
-        </div>
+        <DividerTextual title="Como quer ajudar" />
+
         <div className="user-info-fields">
           <div className="user-type-container">
             <p>Escala (turnos de 6 horas)</p>
@@ -116,10 +129,11 @@ function User() {
           </div>
           {/* Categoria de voluntário */}
           <Input
+            type="text"
             label="Categoria de voluntário"
             placeholder="Voluntário Civil"
           />
-          <Divider />
+          <p>Atividades</p>
           <WhiteButton
             onClick={() => console.log('direcionar para as atividades')}
             text="+ Adicionar atividades"
