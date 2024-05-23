@@ -9,7 +9,7 @@
       "name": "Run npm start",
       "request": "launch",
       "type": "node-terminal",
-      "cwd": "${workspaceFolder}/app"
+      "cwd": "${workspaceFolder}/apps/api/"
     },
     {
       "type": "node",

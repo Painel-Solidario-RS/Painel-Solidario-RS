@@ -1,0 +1,27 @@
+# Ignore everything
+**
+
+# Allow root configuration files
+!/package.json
+!/package-lock.json
+!/.npmrc
+!/.eslintrc.js
+!/tsconfig.json
+
+# Allow application specific directories
+!/apps/api
+!/apps/web
+!/packages
+
+# Ignore unnecessary files for API
+/apps/api/.vscode
+/apps/api/node_modules
+/apps/api/dist
+/apps/api/*.log
+
+# Ignore unnecessary files for Web
+/apps/web/.vscode
+/apps/web/node_modules
+/apps/web/dist
+/apps/web/cypress
+/apps/web/*.log
