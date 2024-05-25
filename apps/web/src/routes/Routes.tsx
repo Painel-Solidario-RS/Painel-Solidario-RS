@@ -7,7 +7,7 @@ import {
 import App from '../App'
 import { Home } from '../pages/Home/Home'
 import { Login } from '../pages/Login/login'
-import { Shelter } from '../pages/Shelter/shelter'
+import { Shelter } from '../pages/Shelter/Shelter'
 import { Splash } from '../pages/Splash/splash'
 import { User } from '../pages/User/user'
 
