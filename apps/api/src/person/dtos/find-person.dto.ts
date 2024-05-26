@@ -19,3 +19,51 @@ export class FindPersonDto {
   @IsString()
   public phone?: string;
 }
+
+export class FindVolunteerCategoryDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  public id?: number;
+
+  @IsOptional()
+  @IsString()
+  public name?: string;
+}
+
+export class FindPersonEmploymentDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  public id?: number;
+
+  @IsOptional()
+  @IsString()
+  public cboCode?: string;
+
+  @IsOptional()
+  @IsString()
+  public name?: string;
+}
+
+export class FindPersonActivityDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  public id?: number;
+
+  @IsOptional()
+  @IsString()
+  public name?: string;
+}
+
+export class FindPersonShiftsDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsPositive()
+  public id?: number;
+
+  @IsOptional()
+  @IsString()
+  public name?: string;
+}

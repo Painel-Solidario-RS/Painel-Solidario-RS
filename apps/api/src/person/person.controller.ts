@@ -6,20 +6,20 @@ import {
   Param,
   Patch,
   Post,
-  Res,
   Query,
+  Res,
 } from '@nestjs/common';
 import { ParseIntPipe } from '@nestjs/common/pipes';
+import { type Response } from 'express';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { CreatePersonDTO } from './dtos/create-person.dto';
 import { FindPersonDto } from './dtos/find-person.dto';
 import { UpdatePersonDTO } from './dtos/update-person.dto';
 import { Person } from './entities/person.entity';
-import { AuthService } from './modules/auth/services/auth.service';
-import { PersonService } from './person.service';
 import { Public } from './modules/auth/decorators/public.decorator';
-import { type Response } from 'express';
+import { AuthService } from './modules/auth/services/auth.service';
 import { JwtPayload } from './modules/auth/types';
+import { PersonService } from './person.service';
 
 @Controller('/person')
 export class PersonController {
@@ -32,14 +32,14 @@ export class PersonController {
   public find(
     @Query(new ValidationPipe()) filter: FindPersonDto,
   ): Promise<Person[]> {
-    return this.personService.find(filter);
+    return this.personService.findPersonByFilter(filter);
   }
 
   @Get(':id')
   public findById(
     @Param('id', new ParseIntPipe()) id: number,
   ): Promise<Person | null> {
-    return this.personService.findById(id);
+    return this.personService.findPersonById(id);
   }
 
   @Public()
@@ -48,7 +48,7 @@ export class PersonController {
     @Body(new ValidationPipe()) args: CreatePersonDTO,
     @Res({ passthrough: true }) response: Response,
   ): Promise<JwtPayload> {
-    const id = await this.personService.create(args);
+    const id = await this.personService.createPerson(args);
     const { password } = args;
     await this.authService.createUser(id, password);
 
@@ -67,11 +67,11 @@ export class PersonController {
     @Param('id', new ParseIntPipe()) id: number,
     @Body(new ValidationPipe()) args: UpdatePersonDTO,
   ): Promise<Person> {
-    return this.personService.update(id, args);
+    return this.personService.updatePerson(id, args);
   }
 
   @Delete(':id')
   public delete(@Param('id', new ParseIntPipe()) id: number): Promise<void> {
-    return this.personService.delete(id);
+    return this.personService.deletePerson(id);
   }
 }
