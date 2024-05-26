@@ -1,22 +1,16 @@
 import { Inject } from '@nestjs/common/decorators';
 import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
-import { CreatePersonDTO } from './dtos/create-person.dto';
-import {
-  FindPersonActivityDto,
-  FindPersonDto,
-  FindPersonEmploymentDto,
-  FindPersonShiftsDto,
-  FindVolunteerCategoryDto,
-} from './dtos/find-person.dto';
-import { UpdatePersonDTO } from './dtos/update-person.dto';
+import { CreatePersonDTO } from '../dtos/create-person.dto';
+import { FindPersonDto } from '../dtos/find-person.dto';
+import { UpdatePersonDTO } from '../dtos/update-person.dto';
 import {
   Person,
   PersonActivity,
   PersonEmployment,
   PersonShifts,
   VolunteerCategory,
-} from './entities/person.entity';
+} from '../entities/person.entity';
 
 export class PersonService {
   public constructor(
@@ -79,35 +73,6 @@ export class PersonService {
 
   public async deletePerson(id: number): Promise<void> {
     this.personRepo.delete(id);
-  }
-
-  public async findVolunteerCategory(
-    filter: FindVolunteerCategoryDto,
-  ): Promise<VolunteerCategory[]> {
-    return this.categoryRepo.find({
-      where: filter,
-    });
-  }
-  public async findPersonEmployment(
-    filter: FindPersonEmploymentDto,
-  ): Promise<PersonEmployment[]> {
-    return this.employmentRepo.find({
-      where: filter,
-    });
-  }
-  public async findPersonActivity(
-    filter: FindPersonActivityDto,
-  ): Promise<PersonActivity[]> {
-    return this.activityRepo.find({
-      where: filter,
-    });
-  }
-  public async findPersonShifts(
-    filter: FindPersonShiftsDto,
-  ): Promise<PersonShifts[]> {
-    return this.shiftRepo.find({
-      where: filter,
-    });
   }
 
   private async getOrCreateRelatedEntities(data: {

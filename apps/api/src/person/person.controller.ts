@@ -19,7 +19,7 @@ import { Person } from './entities/person.entity';
 import { Public } from './modules/auth/decorators/public.decorator';
 import { AuthService } from './modules/auth/services/auth.service';
 import { JwtPayload } from './modules/auth/types';
-import { PersonService } from './person.service';
+import { PersonService } from './services/person.service';
 
 @Controller('/person')
 export class PersonController {

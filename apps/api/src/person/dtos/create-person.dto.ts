@@ -6,8 +6,10 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  Matches,
   MinLength,
 } from 'class-validator';
+import { TimeRegexp } from 'src/common/types';
 
 export class CreatePersonDTO {
   @IsEmail()
@@ -51,4 +53,34 @@ export class CreatePersonDTO {
   @IsOptional()
   @IsBoolean()
   public isAllocated?: boolean;
+}
+
+export class CreatePersonEmploymentDTO {
+  @IsString()
+  public cboCode: string;
+  @IsString()
+  public name: string;
+}
+
+export class CreateVolunteerCategoryDTO {
+  @IsString()
+  public name: string;
+}
+
+export class CreatePersonActivityDTO {
+  @IsString()
+  public name: string;
+}
+
+export class CreatePersonShiftsDTO {
+  @IsString()
+  public name: string;
+
+  @IsString()
+  @Matches(TimeRegexp)
+  public startDate: Date;
+
+  @IsString()
+  @Matches(TimeRegexp)
+  public endDate: Date;
 }

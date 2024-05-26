@@ -6,7 +6,9 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  Matches,
 } from 'class-validator';
+import { TimeRegexp } from 'src/common/types';
 
 export class UpdatePersonDTO {
   @IsOptional()
@@ -49,4 +51,42 @@ export class UpdatePersonDTO {
   @IsOptional()
   @IsBoolean()
   public isAllocated?: boolean;
+}
+
+export class UpdatePersonEmploymentDTO {
+  @IsString()
+  @IsOptional()
+  public cboCode?: string;
+
+  @IsString()
+  @IsOptional()
+  public name?: string;
+}
+
+export class UpdateVolunteerCategoryDTO {
+  @IsString()
+  @IsOptional()
+  public name?: string;
+}
+
+export class UpdatePersonActivityDTO {
+  @IsString()
+  @IsOptional()
+  public name?: string;
+}
+
+export class UpdatePersonShiftsDTO {
+  @IsOptional()
+  @IsString()
+  public name?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(TimeRegexp)
+  public startDate?: Date;
+
+  @IsOptional()
+  @IsString()
+  @Matches(TimeRegexp)
+  public endDate?: Date;
 }
