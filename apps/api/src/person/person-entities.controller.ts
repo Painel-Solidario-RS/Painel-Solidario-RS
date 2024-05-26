@@ -27,7 +27,7 @@ import {
   UpdatePersonEmploymentDTO,
   UpdatePersonShiftsDTO,
   UpdateVolunteerCategoryDTO,
-} from './dtos/update-person.dto';
+} from './dtos/update-person-entities.dto';
 import {
   PersonActivity,
   PersonEmployment,

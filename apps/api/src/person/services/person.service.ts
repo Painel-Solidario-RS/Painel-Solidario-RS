@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common/decorators';
+import { Address } from 'src/address/entities/address.entity';
 import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
 import { CreatePersonDTO } from '../dtos/create-person.dto';
@@ -11,7 +12,6 @@ import {
   PersonShifts,
   VolunteerCategory,
 } from '../entities/person.entity';
-import { Address } from 'src/address/entities/address.entity';
 
 export class PersonService {
   public constructor(
@@ -49,30 +49,12 @@ export class PersonService {
   }
 
   public async createPerson(data: CreatePersonDTO): Promise<number> {
-    const {
-      address,
-      employmentId,
-      volunteerCategoryIds,
-      activityIds,
-      shiftIds,
-      ...rest
-    } = data;
-
-    const personAddress = await this.addressRepo.save(
-      this.addressRepo.create(address),
+    const person = this.mapDtoToEntity(data);
+    person.address = await this.addressRepo.save(
+      this.addressRepo.create(data.address),
     );
 
-    const person = this.personRepo.create({
-      ...rest,
-      address: personAddress,
-      employment: employmentId ? { id: employmentId } : null,
-      categories: volunteerCategoryIds?.map((id) => ({ id: id })),
-      activities: activityIds?.map((id) => ({ id: id })),
-      shifts: shiftIds?.map((id) => ({ id: id })),
-    });
-
     await this.personRepo.save(person);
-
     return person.id;
   }
 
@@ -80,16 +62,68 @@ export class PersonService {
     id: number,
     data: UpdatePersonDTO,
   ): Promise<Person | null> {
-    this.getOrCreateRelatedEntities({
-      category: data.categoryName,
-    });
+    const {
+      employmentId,
+      volunteerCategoryIds,
+      activityIds,
+      shiftIds,
+      address,
+      ...rest
+    } = data;
 
-    await this.personRepo.update(id, data);
+    //
+    // TODO(Perin): Implement this logic to save/update/delete address
+    //
+    // const { address: currentAddress } = await this.personRepo.findOne({
+    //   where: { id },
+    //   relations: ['address'],
+    // });
 
-    const person = await this.personRepo.findOne({
-      where: { id },
-    });
+    // if (!currentAddress && address) {
+    //   // Person doesn't have an address and we get one, so we create it
+    //   const personAddress = await this.addressRepo.save(
+    //     this.addressRepo.create(address),
+    //   );
+    //   person.address = personAddress;
+    // } else if (currentAddress && !address) {
+    //   // Person has an address and we don't get one, so we remove it
+    //   await this.addressRepo.delete({ id: currentAddress.id });
+    // } else if (currentAddress && address) {
+    //   // Person has an address and we get one, so we update it
+    //   await this.addressRepo.update(currentAddress.id, {
+    //     ...currentAddress,
+    //     ...address,
+    //   });
+    // }
 
+    // Approach 1: Create related entities
+    // const person = this.mapDtoToEntity(data);
+
+    // Approach 2: Load related entities
+    const person = {
+      ...(await this.findPersonById(id)),
+      ...rest,
+      ...(await this.loadDtoRelatedEntities(data)),
+    } satisfies Person;
+
+    // Approach 3: Merge related entities
+    // const person = this.personRepo.merge(await this.findPersonById(id), {
+    //   employment,
+    //   categories,
+    //   activities,
+    //   shifts,
+    // });
+
+    // Approach 4: Create new entity
+    // const person = this.personRepo.create({
+    //   ...rest,
+    //   employment,
+    //   categories,
+    //   activities,
+    //   shifts,
+    // });
+
+    await this.personRepo.update(id, person);
     return person;
   }
 
@@ -103,27 +137,62 @@ export class PersonService {
     await this.addressRepo.delete({ id: address.id });
   }
 
-  private async getOrCreateRelatedEntities(data: {
-    category: string;
-  }): Promise<{
-    category: number;
+  private async loadDtoRelatedEntities(
+    data: CreatePersonDTO | UpdatePersonDTO,
+  ): Promise<{
+    employment: PersonEmployment;
+    categories: VolunteerCategory[];
+    activities: PersonActivity[];
+    shifts: PersonShifts[];
   }> {
-    let category: VolunteerCategory | null = null;
-    category = await this.categoryRepo.findOne({
-      select: ['id'],
-      where: { name: data.category },
+    const { employmentId, volunteerCategoryIds, activityIds, shiftIds } = data;
+
+    const [employment, categories, activities, shifts] = await Promise.all([
+      this.employmentRepo.findOne({
+        where: { id: employmentId },
+      }),
+      volunteerCategoryIds
+        ? Promise.all(
+            volunteerCategoryIds.map((id) =>
+              this.categoryRepo.findOne({ where: { id } }),
+            ),
+          )
+        : [],
+      activityIds
+        ? Promise.all(
+            activityIds.map((id) =>
+              this.activityRepo.findOne({ where: { id } }),
+            ),
+          )
+        : [],
+      shiftIds
+        ? Promise.all(
+            shiftIds.map((id) => this.shiftRepo.findOne({ where: { id } })),
+          )
+        : [],
+    ]);
+    return { employment, categories, activities, shifts };
+  }
+
+  private mapDtoToEntity(data: CreatePersonDTO | UpdatePersonDTO) {
+    const {
+      employmentId,
+      volunteerCategoryIds,
+      activityIds,
+      shiftIds,
+      ...rest
+    } = data;
+
+    return this.personRepo.create({
+      ...rest,
+      employment: this.employmentRepo.create({ id: employmentId }),
+      categories: volunteerCategoryIds?.map((id) =>
+        this.categoryRepo.create({ id: id }),
+      ),
+      activities: activityIds?.map((id) =>
+        this.activityRepo.create({ id: id }),
+      ),
+      shifts: shiftIds?.map((id) => this.shiftRepo.create({ id: id })),
     });
-
-    if (!category) {
-      category = this.categoryRepo.create({
-        name: data.category,
-      });
-    }
-
-    await this.categoryRepo.save(category);
-
-    return {
-      category: category.id,
-    };
   }
 }

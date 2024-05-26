@@ -3,90 +3,52 @@ import {
   IsArray,
   IsBoolean,
   IsEmail,
+  IsObject,
   IsOptional,
   IsPositive,
   IsString,
-  Matches,
+  MinLength,
 } from 'class-validator';
-import { TimeRegexp } from 'src/common/types';
+import { UpdatePersonAddressDTO } from './update-person-entities.dto';
 
 export class UpdatePersonDTO {
-  @IsOptional()
-  @IsEmail()
-  public email?: string;
-
-  @IsOptional()
+  @MinLength(6)
   @IsString()
-  public name?: string;
+  public name: string;
+
+  @IsEmail()
+  public email: string;
+
+  @IsString()
+  public phone: string;
+
+  @IsBoolean()
+  public allocated: boolean;
 
   @IsOptional()
   @IsPositive()
   public employmentId?: number;
 
   @IsOptional()
-  @IsString()
-  public phone?: string;
-
-  @IsOptional()
-  @IsString()
-  public categoryName?: string;
-
-  @IsOptional()
   @Type(() => Array)
   @IsArray()
-  // Com o each aplicamos a validação em cada item do array
   @IsPositive({ each: true })
-  public activitiesId?: number[];
+  public volunteerCategoryIds?: number[];
 
   @IsOptional()
   @Type(() => Array)
   @IsArray()
   @IsPositive({ each: true })
-  public shiftsId?: number[];
+  public activityIds?: number[];
 
   @IsOptional()
-  @IsPositive()
-  public addressId?: number;
+  @Type(() => Array)
+  @IsArray()
+  @IsPositive({ each: true })
+  public shiftIds?: number[];
 
+  @Type(() => UpdatePersonAddressDTO)
+  @IsObject()
   @IsOptional()
-  @IsBoolean()
-  public isAllocated?: boolean;
-}
-
-export class UpdatePersonEmploymentDTO {
-  @IsString()
-  @IsOptional()
-  public cboCode?: string;
-
-  @IsString()
-  @IsOptional()
-  public name?: string;
-}
-
-export class UpdateVolunteerCategoryDTO {
-  @IsString()
-  @IsOptional()
-  public name?: string;
-}
-
-export class UpdatePersonActivityDTO {
-  @IsString()
-  @IsOptional()
-  public name?: string;
-}
-
-export class UpdatePersonShiftsDTO {
-  @IsOptional()
-  @IsString()
-  public name?: string;
-
-  @IsOptional()
-  @IsString()
-  @Matches(TimeRegexp)
-  public startDate?: Date;
-
-  @IsOptional()
-  @IsString()
-  @Matches(TimeRegexp)
-  public endDate?: Date;
+  public address?: UpdatePersonAddressDTO;
 }

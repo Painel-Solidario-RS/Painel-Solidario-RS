@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common/decorators';
 import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
 import { FindVolunteerCategoryDto } from '../dtos/find-person.dto';
-import { UpdateVolunteerCategoryDTO } from '../dtos/update-person.dto';
+import { UpdateVolunteerCategoryDTO } from '../dtos/update-person-entities.dto';
 import { VolunteerCategory } from '../entities/person.entity';
 import { CreateVolunteerCategoryDTO } from '../dtos/create-person-entities.dto';
 

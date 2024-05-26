@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { FindPersonShiftsDto } from '../dtos/find-person.dto';
 import { PersonShifts } from '../entities/person.entity';
 import { CreatePersonShiftsDTO } from '../dtos/create-person-entities.dto';
-import { UpdatePersonShiftsDTO } from '../dtos/update-person.dto';
+import { UpdatePersonShiftsDTO } from '../dtos/update-person-entities.dto';
 
 export class PersonShiftsService {
   public constructor(
