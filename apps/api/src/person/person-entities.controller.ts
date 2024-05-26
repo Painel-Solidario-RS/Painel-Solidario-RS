@@ -15,7 +15,7 @@ import {
   CreatePersonEmploymentDTO,
   CreatePersonShiftsDTO,
   CreateVolunteerCategoryDTO,
-} from './dtos/create-person.dto';
+} from './dtos/create-person-entities.dto';
 import {
   FindPersonActivityDto,
   FindPersonEmploymentDto,

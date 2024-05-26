@@ -3,7 +3,7 @@ import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
 import { FindPersonShiftsDto } from '../dtos/find-person.dto';
 import { PersonShifts } from '../entities/person.entity';
-import { CreatePersonShiftsDTO } from '../dtos/create-person.dto';
+import { CreatePersonShiftsDTO } from '../dtos/create-person-entities.dto';
 import { UpdatePersonShiftsDTO } from '../dtos/update-person.dto';
 
 export class PersonShiftsService {

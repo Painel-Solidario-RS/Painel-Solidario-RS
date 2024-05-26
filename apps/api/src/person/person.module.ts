@@ -10,9 +10,10 @@ import { PersonEmploymentService } from './services/person-employment.service';
 import { PersonActivityService } from './services/person-activity.service';
 import { PersonShiftsService } from './services/person-shifts.service';
 import { VolunteerCategoryService } from './services/volunteer-category.service';
+import { AddressModule } from 'src/address/address.module';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, AuthModule],
+  imports: [ConfigModule, DatabaseModule, AuthModule, AddressModule],
   providers: [
     ...personProviders,
     PersonService,

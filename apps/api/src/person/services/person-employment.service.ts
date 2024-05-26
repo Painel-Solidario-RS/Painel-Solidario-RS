@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common/decorators';
 import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
-import { CreatePersonEmploymentDTO } from '../dtos/create-person.dto';
+import { CreatePersonEmploymentDTO } from '../dtos/create-person-entities.dto';
 import { FindPersonEmploymentDto } from '../dtos/find-person.dto';
 import { UpdatePersonEmploymentDTO } from '../dtos/update-person.dto';
 import { PersonEmployment } from '../entities/person.entity';

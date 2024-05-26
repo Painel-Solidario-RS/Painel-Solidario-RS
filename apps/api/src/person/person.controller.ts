@@ -17,16 +17,11 @@ import { FindPersonDto } from './dtos/find-person.dto';
 import { UpdatePersonDTO } from './dtos/update-person.dto';
 import { Person } from './entities/person.entity';
 import { Public } from './modules/auth/decorators/public.decorator';
-import { AuthService } from './modules/auth/services/auth.service';
-import { JwtPayload } from './modules/auth/types';
 import { PersonService } from './services/person.service';
 
 @Controller('/person')
 export class PersonController {
-  constructor(
-    private readonly personService: PersonService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly personService: PersonService) {}
 
   @Get()
   public find(
@@ -46,20 +41,9 @@ export class PersonController {
   @Post()
   public async create(
     @Body(new ValidationPipe()) args: CreatePersonDTO,
-    @Res({ passthrough: true }) response: Response,
-  ): Promise<JwtPayload> {
+  ): Promise<{ id: number }> {
     const id = await this.personService.createPerson(args);
-    const { password } = args;
-    await this.authService.createUser(id, password);
-
-    const { token, payload } = await this.authService.login(
-      args.email,
-      password,
-    );
-
-    response.header('x-auth-token', token);
-
-    return payload;
+    return { id };
   }
 
   @Patch(':id')

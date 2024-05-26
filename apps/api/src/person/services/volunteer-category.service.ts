@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common/decorators';
 import { CONSTANTS } from 'src/database/constants';
 import { Repository } from 'typeorm';
-import { CreateVolunteerCategoryDTO } from '../dtos/create-person.dto';
 import { FindVolunteerCategoryDto } from '../dtos/find-person.dto';
 import { UpdateVolunteerCategoryDTO } from '../dtos/update-person.dto';
 import { VolunteerCategory } from '../entities/person.entity';
+import { CreateVolunteerCategoryDTO } from '../dtos/create-person-entities.dto';
 
 export class VolunteerCategoryService {
   public constructor(

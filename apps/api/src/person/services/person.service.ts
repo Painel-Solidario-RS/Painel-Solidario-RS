@@ -11,11 +11,14 @@ import {
   PersonShifts,
   VolunteerCategory,
 } from '../entities/person.entity';
+import { Address } from 'src/address/entities/address.entity';
 
 export class PersonService {
   public constructor(
     @Inject(CONSTANTS.REPOSITORY.PERSON)
     private readonly personRepo: Repository<Person>,
+    @Inject(CONSTANTS.REPOSITORY.ADDRESS)
+    private readonly addressRepo: Repository<Address>,
     @Inject(CONSTANTS.REPOSITORY.PERSON_SHIFT)
     private readonly shiftRepo: Repository<PersonShifts>,
     @Inject(CONSTANTS.REPOSITORY.PERSON_ACTIVITY)
@@ -35,18 +38,37 @@ export class PersonService {
   public findPersonById(id: number): Promise<Person | null> {
     return this.personRepo.findOne({
       where: { id },
-      relations: ['categories', 'address'],
+      relations: [
+        'address',
+        'employment',
+        'activities',
+        'shifts',
+        'categories',
+      ],
     });
   }
 
   public async createPerson(data: CreatePersonDTO): Promise<number> {
-    const { category } = await this.getOrCreateRelatedEntities({
-      category: data.categoryName,
-    });
+    const {
+      address,
+      employmentId,
+      volunteerCategoryIds,
+      activityIds,
+      shiftIds,
+      ...rest
+    } = data;
+
+    const personAddress = await this.addressRepo.save(
+      this.addressRepo.create(address),
+    );
 
     const person = this.personRepo.create({
-      ...data,
-      categories: [{ id: category }],
+      ...rest,
+      address: personAddress,
+      employment: employmentId ? { id: employmentId } : null,
+      categories: volunteerCategoryIds?.map((id) => ({ id: id })),
+      activities: activityIds?.map((id) => ({ id: id })),
+      shifts: shiftIds?.map((id) => ({ id: id })),
     });
 
     await this.personRepo.save(person);

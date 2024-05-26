@@ -86,7 +86,7 @@ export class Person {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column()
   name: string;
 
   @Column()
@@ -95,7 +95,7 @@ export class Person {
   @Column()
   phone: string;
 
-  @Column({ nullable: true })
+  @Column()
   allocated: boolean;
 
   @ManyToOne(() => PersonEmployment, (employment) => employment.people, {

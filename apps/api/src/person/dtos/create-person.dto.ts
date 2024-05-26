@@ -3,84 +3,52 @@ import {
   IsArray,
   IsBoolean,
   IsEmail,
+  IsObject,
   IsOptional,
   IsPositive,
   IsString,
-  Matches,
   MinLength,
 } from 'class-validator';
-import { TimeRegexp } from 'src/common/types';
+import { CreatePersonAddressDTO } from './create-person-entities.dto';
 
 export class CreatePersonDTO {
+  @MinLength(6)
+  @IsString()
+  public name: string;
+
   @IsEmail()
   public email: string;
 
   @IsString()
-  @MinLength(6)
-  public password: string;
+  public phone: string;
 
-  @IsOptional()
-  @IsString()
-  public name?: string;
+  @IsBoolean()
+  public allocated: boolean;
 
   @IsOptional()
   @IsPositive()
   public employmentId?: number;
 
-  @IsString()
-  public phone: string;
-
-  @IsString()
-  public categoryName: string;
-
   @IsOptional()
   @Type(() => Array)
   @IsArray()
-  // Com o each aplicamos a validação em cada item do array
   @IsPositive({ each: true })
-  public activitiesId?: number[];
+  public volunteerCategoryIds?: number[];
 
   @IsOptional()
   @Type(() => Array)
   @IsArray()
   @IsPositive({ each: true })
-  public shiftsId?: number[];
+  public activityIds?: number[];
 
   @IsOptional()
-  @IsPositive()
-  public addressId?: number;
+  @Type(() => Array)
+  @IsArray()
+  @IsPositive({ each: true })
+  public shiftIds?: number[];
 
+  @Type(() => CreatePersonAddressDTO)
+  @IsObject()
   @IsOptional()
-  @IsBoolean()
-  public isAllocated?: boolean;
-}
-
-export class CreatePersonEmploymentDTO {
-  @IsString()
-  public cboCode: string;
-  @IsString()
-  public name: string;
-}
-
-export class CreateVolunteerCategoryDTO {
-  @IsString()
-  public name: string;
-}
-
-export class CreatePersonActivityDTO {
-  @IsString()
-  public name: string;
-}
-
-export class CreatePersonShiftsDTO {
-  @IsString()
-  public name: string;
-
-  @IsString()
-  @Matches(TimeRegexp)
-  public startDate: Date;
-
-  @IsString()
-  @Matches(TimeRegexp)
-  public endDate: Date;
+  public address?: CreatePersonAddressDTO;
 }
