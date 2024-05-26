@@ -94,7 +94,13 @@ export class PersonService {
   }
 
   public async deletePerson(id: number): Promise<void> {
-    this.personRepo.delete(id);
+    const { address } = await this.personRepo.findOne({
+      where: { id },
+      relations: ['address'],
+    });
+
+    await this.personRepo.delete(id);
+    await this.addressRepo.delete({ id: address.id });
   }
 
   private async getOrCreateRelatedEntities(data: {
