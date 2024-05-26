@@ -1,35 +1,35 @@
-import LoginImage from "../../assets/Login.svg";
+import RegisterImage from "../../assets/Login.svg";
 import { Button, Typography } from "@mui/material";
-import styles from "./Login.module.css";
+import styles from "./Register.module.css";
 import Input2 from "../../components/Input2";
 import { Google as GoogleIcon, Facebook as FacebookIcon } from "@mui/icons-material";
-import { useLogin } from "./Login.hook";
+import { useRegister } from "./Register.hook";
 import { Navbar } from "../../components/Navbar";
 
-function Login() {
-  const login = useLogin();
+function Register() {
+  const register = useRegister();
 
   return (
     <div className={styles.page}>
-      <Navbar title="Login" />
+      <Navbar title="Cadastro" />
       <div className={styles.container}>
         <div className={styles.image}>
-          <img src={LoginImage} alt="Login" />
+          <img src={RegisterImage} alt="Register" />
         </div>
         <form
           onSubmit={(e) => {
             e.preventDefault();
             const email = (e.target as HTMLFormElement).email.value;
             const password = (e.target as HTMLFormElement).password.value;
-            login.signInWithEmailAndPassword(email, password);
+            register.signUpWithEmailAndPassword(email, password);
           }}
           className={styles.form}
         >
           <Typography variant="h6" style={{ width: "100%", textAlign: "left" }}>
-            Entrar
+            Cadastrar
           </Typography>
           <Typography variant="body2">
-            Realize o login na sua conta para acessar todos os serviços disponíveis.
+            Realize o cadastro da sua conta para acessar todos os serviços disponíveis.
           </Typography>
           <Button
             variant="outlined"
@@ -41,10 +41,10 @@ function Login() {
               alignItems: "center",
               gap: 10,
             }}
-            onClick={login.signInWithGoogle}
+            onClick={register.signInWithGoogle}
           >
             <GoogleIcon />
-            Entrar com Google
+            Cadastrar com Google
           </Button>
           <Button
             variant="outlined"
@@ -56,10 +56,10 @@ function Login() {
               alignItems: "center",
               gap: 10,
             }}
-            onClick={login.signInWithFacebook}
+            onClick={register.signInWithFacebook}
           >
             <FacebookIcon />
-            Entrar com Facebook
+            Cadastrar com Facebook
           </Button>
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>ou</div>
@@ -68,18 +68,8 @@ function Login() {
 
           <Input2 type="password" label="Senha" name="password" placeholder="Insira sua senha" />
 
-          <Button
-            variant="text"
-            fullWidth
-            style={{ color: "#4285f4", textAlign: "right" }}
-            onClick={() => {
-              console.log("Esqueci minha senha");
-            }}
-          >
-            Esqueci minha senha
-          </Button>
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            Entrar
+            Cadastrar
           </Button>
         </form>
       </div>
@@ -87,4 +77,4 @@ function Login() {
   );
 }
 
-export { Login };
+export { Register };

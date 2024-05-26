@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, type }) => {
       }}
     >
       <br />
-      <Box sx={{ paddingLeft: '21px', paddingRight: '26px' }}>
+      <Box>
         {type == 'text' && (
           <FormLabel
             sx={{
