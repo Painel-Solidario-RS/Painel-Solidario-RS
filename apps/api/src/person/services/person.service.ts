@@ -96,35 +96,29 @@ export class PersonService {
     //   });
     // }
 
-    // Approach 1: Create related entities
-    // const person = this.mapDtoToEntity(data);
+    const [person, relatedEntities] = await Promise.all([
+      this.findPersonById(id),
+      this.loadDtoRelatedEntities(data),
+    ]);
 
-    // Approach 2: Load related entities
-    const person = {
-      ...(await this.findPersonById(id)),
+    const personWithNewData = {
+      ...person,
+      ...relatedEntities,
       ...rest,
-      ...(await this.loadDtoRelatedEntities(data)),
-    } satisfies Person;
+    }
 
-    // Approach 3: Merge related entities
-    // const person = this.personRepo.merge(await this.findPersonById(id), {
-    //   employment,
-    //   categories,
-    //   activities,
-    //   shifts,
-    // });
+    await this.personRepo.save([personWithNewData]);
 
-    // Approach 4: Create new entity
-    // const person = this.personRepo.create({
-    //   ...rest,
-    //   employment,
-    //   categories,
-    //   activities,
-    //   shifts,
-    // });
-
-    await this.personRepo.update(id, person);
-    return person;
+    return this.personRepo.findOne({
+      where: { id },
+      relations: [
+        'address',
+        'employment',
+        'activities',
+        'shifts',
+        'categories',
+      ],
+    });
   }
 
   public async deletePerson(id: number): Promise<void> {
