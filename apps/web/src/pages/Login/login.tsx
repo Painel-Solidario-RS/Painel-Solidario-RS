@@ -1,7 +1,7 @@
 import LoginImage from "../../assets/Login.svg";
 import { Button, Typography } from "@mui/material";
 import styles from "./Login.module.css";
-import Input from "../../components/Input";
+import Input from "../../components/Input/Input";
 import { Google as GoogleIcon, Facebook as FacebookIcon } from "@mui/icons-material";
 import { useLogin } from "./Login.hook";
 import { Navbar } from "../../components/Navbar";

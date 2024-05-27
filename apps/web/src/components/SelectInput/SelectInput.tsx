@@ -32,7 +32,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
   onChange
 }) => {
   return (
-    <Box sx={sxSelectInput}>
+    <Box sx={{ width: "100%", ...sxSelectInput }}>
       <FormControl
         fullWidth
         sx={{
@@ -55,7 +55,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
         <Select
           placeholder={placeholder}
           sx={{
-            width: '328px',
+            width: '100%',
             height: '48px',
             borderRadius: '8px',
             display: 'flex',

@@ -1,7 +1,7 @@
 import RegisterImage from "../../assets/Login.svg";
 import { Button, Typography } from "@mui/material";
 import styles from "./Register.module.css";
-import Input from "../../components/Input";
+import Input from "../../components/Input/Input";
 import { Google as GoogleIcon, Facebook as FacebookIcon } from "@mui/icons-material";
 import { useRegister } from "./Register.hook";
 import { Navbar } from "../../components/Navbar";
