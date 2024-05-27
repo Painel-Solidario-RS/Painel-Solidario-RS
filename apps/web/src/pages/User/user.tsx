@@ -5,16 +5,43 @@ import BasePage from '../../components/common/BasePage'
 import './user.css'
 import Input from '../../components/Input/Input'
 import SearchIcon from '@mui/icons-material/Search'
-import { Checkbox, Divider, FormControlLabel } from '@mui/material'
+import {
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  SelectChangeEvent
+} from '@mui/material'
 import SelectInput from '../../components/SelectInput/SelectInput'
+import { useState } from 'react'
 
 function User() {
   const navigate = useNavigate()
+  const [selectedProfile, setSelectedProfile] = useState('')
+  const [selectedPlace, setSelectedPlace] = useState('')
+
+  const handleChangeProfile = (event: SelectChangeEvent<string>) => {
+    const selectedProfileValue = event.target.value
+    setSelectedProfile(selectedProfileValue)
+  }
+  const handleChangePlace = (event: SelectChangeEvent<string>) => {
+    const selectedPlaceValue = event.target.value
+
+    setSelectedPlace(selectedPlaceValue)
+  }
 
   const goToHome = () => {
     navigate('/home')
   }
 
+  const stylesInput = {
+    flexDirection: 'column',
+    display: 'flex',
+    flex: 1,
+    padding: '8px',
+    paddingLeft: '21px',
+    height: '72px',
+    gap: '8px'
+  }
   return (
     <BasePage leftIcon title="Cadastro">
       <div className="user-header">
@@ -57,6 +84,9 @@ function User() {
             ]}
             label="Perfil"
             placeholder="Selecione"
+            sxSelectInput={stylesInput}
+            value={selectedProfile}
+            onChange={handleChangeProfile}
           />
           {/* <Select/> */}
         </div>
@@ -77,6 +107,9 @@ function User() {
             ]}
             label="Tipo de logradouro"
             placeholder="Selecione"
+            sxSelectInput={stylesInput}
+            value={selectedPlace}
+            onChange={handleChangePlace}
           />
 
           {/* Endereço (logradouro) */}
