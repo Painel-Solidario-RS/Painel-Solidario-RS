@@ -6,10 +6,12 @@ import {
   InputAdornment,
   InputBase,
   SxProps,
+  FormHelperText,
 } from "@mui/material";
 import { JSXElementConstructor, ReactElement } from "react";
 
 type InputProps = {
+  type?: string;
   label: string;
   placeholder: string;
   name?: string;
@@ -17,12 +19,22 @@ type InputProps = {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: boolean;
   helperText?: string;
-  link?: string;
   icon?: ReactElement<string | JSXElementConstructor<string>> | undefined;
   sxInput?: SxProps | undefined;
 };
 
-const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
+const Input: React.FC<InputProps> = ({
+  type,
+  label,
+  placeholder,
+  name,
+  value,
+  onChange,
+  error,
+  helperText,
+  icon,
+  sxInput
+}) => {
   return (
     <Box sx={{ width: "100%", ...sxInput }}>
       <FormControl
@@ -31,6 +43,7 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
           fontFamily: "Inter",
           width: "100%",
         }}
+        error={error}
       >
         <FormLabel
           sx={{
@@ -49,6 +62,10 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
         <InputBase
           id="outlined-multiline-flexible"
           placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+          type={type}
           sx={{
             padding: "0 16px",
             width: "100%",
@@ -60,23 +77,24 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
             lineHeight: "16px",
             justifyContent: "space-between",
             textTransform: "none",
-            border: "1px solid #aaacae",
+            border: error ? "1px solid red" : "1px solid #aaacae",
           }}
-          inputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  edge="end"
-                  aria-label="ícone"
-                  onClick={() => console.log("implementar")}
-                  className="green-color"
-                >
-                  {icon}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          endAdornment={icon && (
+            <InputAdornment position="end">
+              <IconButton
+                edge="end"
+                aria-label="ícone"
+                onClick={() => console.log("implementar")}
+                className="green-color"
+              >
+                {icon}
+              </IconButton>
+            </InputAdornment>
+          )}
         />
+        {helperText && (
+          <FormHelperText>{helperText}</FormHelperText>
+        )}
       </FormControl>
     </Box>
   );
