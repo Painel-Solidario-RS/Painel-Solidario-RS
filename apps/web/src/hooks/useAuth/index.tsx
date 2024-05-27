@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  UserCredential
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -26,11 +27,11 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-function mapUserCredentialToUser(userCredential: { user: any }): User {
+async function mapUserCredentialToUser(userCredential: UserCredential): Promise<User> {
   return {
     name: userCredential.user.displayName!,
     email: userCredential.user.email!,
-    token: userCredential.user.getIdToken(),
+    token: await userCredential.user.getIdToken(),
     picture: userCredential.user.photoURL,
   };
 }
@@ -41,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = mapUserCredentialToUser(userCredential);
+      const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
       return user;
     } catch (error) {
@@ -53,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = mapUserCredentialToUser(userCredential);
+      const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
       return user;
     } catch (error) {
@@ -69,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const provider = new providerData!.providerMethod!();
     try {
       const userCredential = await signInWithPopup(auth, provider);
-      const user = mapUserCredentialToUser(userCredential);
+      const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
       return user;
     } catch (error) {
@@ -91,7 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (_user) => {
       if (_user) {
-        const user = mapUserCredentialToUser({ user: _user });
+        const user = await mapUserCredentialToUser({ user: _user } as UserCredential);
         setUser(user);
       } else {
         setUser(null);
