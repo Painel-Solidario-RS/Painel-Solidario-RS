@@ -1,12 +1,11 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material'
 
 interface GreenButtonProps {
-  text?: string;
-  onClick?: () => void;
-  type?: "button" | "submit" | "reset";
+  text?: string
+  onClick?: () => void
+  type?: 'button' | 'submit' | 'reset'
 }
 
- 
 const GreenButton: React.FC<GreenButtonProps> = ({
   text,
   onClick,
@@ -16,18 +15,22 @@ const GreenButton: React.FC<GreenButtonProps> = ({
     <Button
       className="green-background-color white-color"
       sx={{
-        borderRadius: "25px",
-        width: "100%",
-        gap: "0px",
-        opacity: "0px",
-        fontSize: "small",
+        borderRadius: '25px',
+        width: '100%',
+        gap: '0px',
+        opacity: '0px',
+        fontSize: '16px',
+        fontFamily: 'Roboto',
+        lineHeight: '24px',
+        letterSpacing: '0.1px',
+        textTransform: 'none'
       }}
       onClick={onClick}
       {...props}
     >
       {text}
     </Button>
-  );
-};
+  )
+}
 
-export default GreenButton;
+export default GreenButton

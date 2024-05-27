@@ -2,7 +2,11 @@
   "extends": "@repo/typescript-config/web.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "src",
+    "paths": {
+      "../../components/*": ["components/*"],
+      "../pages/*": ["pages/*"]
+    }
   },
   "include": ["src", "cypress", "*.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

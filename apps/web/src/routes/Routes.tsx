@@ -10,6 +10,9 @@ import { Login } from '../pages/Login/login'
 import { Shelter } from '../pages/Shelter/shelter'
 import { Splash } from '../pages/Splash/splash'
 import { User } from '../pages/User/user'
+import { Needs } from '../pages/Needs/Needs'
+import { AddNeeds } from '../pages/Needs/AddNeeds'
+import { EditNeeds } from '../pages/Needs/EditNeeds'
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +23,9 @@ export const router = createBrowserRouter(
       <Route path="/user" element={<User />} />
       <Route path="/shelter" element={<Shelter />} />
       <Route path="/splash" element={<Splash />} />
+      <Route path="/needs" element={<Needs />} />
+      <Route path="/needs/add" element={<AddNeeds />} />
+      <Route path="/needs/edit/:id" element={<EditNeeds />} />
     </>
   )
 )
