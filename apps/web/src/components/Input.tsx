@@ -11,7 +11,7 @@ type InputProps = {
   helperText?: string;
 };
 
-const Input2: React.FC<InputProps> = (props: InputProps) => {
+const Input: React.FC<InputProps> = (props: InputProps) => {
   const { label, placeholder, type, name, value, onChange ,error, helperText} = props;
 
   return (
@@ -47,4 +47,4 @@ const Input2: React.FC<InputProps> = (props: InputProps) => {
   );
 };
 
-export default Input2;
+export default Input;

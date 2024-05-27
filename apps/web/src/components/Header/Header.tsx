@@ -1,5 +1,4 @@
-import { AppBar, Toolbar, IconButton, Typography, Container, Button } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from "../../assets/logout.svg";
@@ -20,9 +19,6 @@ function Header() {
       position="static"
     >
       <Toolbar>
-        {/* <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          <MenuIcon />
-        </IconButton> */}
         <Container sx={{ textAlign: "left" }}>
           <Typography component="div" sx={{ flexGrow: 1, fontWeight: "300" }}>
             Olá, <strong>{auth.user?.name}</strong>

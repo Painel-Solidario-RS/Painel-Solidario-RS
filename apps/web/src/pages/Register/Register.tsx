@@ -1,7 +1,7 @@
 import RegisterImage from "../../assets/Login.svg";
 import { Button, Typography } from "@mui/material";
 import styles from "./Register.module.css";
-import Input2 from "../../components/Input2";
+import Input from "../../components/Input";
 import { Google as GoogleIcon, Facebook as FacebookIcon } from "@mui/icons-material";
 import { useRegister } from "./Register.hook";
 import { Navbar } from "../../components/Navbar";
@@ -64,9 +64,9 @@ function Register() {
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>ou</div>
 
-          <Input2 type="email" label="E-mail" name="email" placeholder="Insira seu e-mail" />
+          <Input type="email" label="E-mail" name="email" placeholder="Insira seu e-mail" />
 
-          <Input2 type="password" label="Senha" name="password" placeholder="Insira sua senha" />
+          <Input type="password" label="Senha" name="password" placeholder="Insira sua senha" />
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
             Cadastrar

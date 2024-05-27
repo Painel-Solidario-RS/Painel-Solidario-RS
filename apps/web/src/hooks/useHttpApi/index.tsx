@@ -7,7 +7,6 @@ export const useHttpApi = () => {
   const auth = useAuth();
 
   const get = async (path: string) => {
-    console.log(auth.user?.token);
     const response = await axios.get(`${API_URL}${path}`, {
       headers: {
         Authorization: `Bearer ${auth.user?.token}`,

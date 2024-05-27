@@ -1,7 +1,7 @@
 import LoginImage from "../../assets/Login.svg";
 import { Button, Typography } from "@mui/material";
 import styles from "./Login.module.css";
-import Input2 from "../../components/Input2";
+import Input from "../../components/Input";
 import { Google as GoogleIcon, Facebook as FacebookIcon } from "@mui/icons-material";
 import { useLogin } from "./Login.hook";
 import { Navbar } from "../../components/Navbar";
@@ -64,9 +64,9 @@ function Login() {
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>ou</div>
 
-          <Input2 type="email" label="E-mail" name="email" placeholder="Insira seu e-mail" />
+          <Input type="email" label="E-mail" name="email" placeholder="Insira seu e-mail" />
 
-          <Input2 type="password" label="Senha" name="password" placeholder="Insira sua senha" />
+          <Input type="password" label="Senha" name="password" placeholder="Insira sua senha" />
 
           <Button
             variant="text"
