@@ -5,9 +5,10 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  UserCredential
+  UserCredential,
+  getAuth,
 } from "firebase/auth";
-import { auth } from "./firebaseConfig";
+import { app } from "./firebaseConfig";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
@@ -41,6 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string) => {
     try {
+      const auth = getAuth(app);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
@@ -53,6 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
+      const auth = getAuth(app);
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
@@ -69,6 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const provider = new providerData!.providerMethod!();
     try {
+      const auth = getAuth(app);
       const userCredential = await signInWithPopup(auth, provider);
       const user = await mapUserCredentialToUser(userCredential);
       setUser(user);
@@ -81,6 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
+      const auth = getAuth(app);
       await auth.signOut();
       setUser(null);
     } catch (error) {
@@ -90,16 +95,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (_user) => {
-      if (_user) {
-        const user = await mapUserCredentialToUser({ user: _user } as UserCredential);
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
+    try {
+      const auth = getAuth(app);
+      const unsubscribe = onAuthStateChanged(auth, async (_user) => {
+        if (_user) {
+          const user = await mapUserCredentialToUser({ user: _user } as UserCredential);
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Error setting up auth state change:", error);
+    }
   }, []);
 
   return (
