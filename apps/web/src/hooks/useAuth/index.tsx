@@ -7,9 +7,10 @@ import {
   onAuthStateChanged,
   UserCredential,
   getAuth,
+  Auth,
 } from "firebase/auth";
 import { app } from "./firebaseConfig";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 
 type User = {
   name: string;
@@ -38,65 +39,13 @@ async function mapUserCredentialToUser(userCredential: UserCredential): Promise<
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [auth, setAuth] = useState<Auth | null>(null);
   const [user, setUser] = useState<User | null>(null);
-
-  const signUp = async (email: string, password: string) => {
-    try {
-      const auth = getAuth(app);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = await mapUserCredentialToUser(userCredential);
-      setUser(user);
-      return user;
-    } catch (error) {
-      console.error("Error signing up:", error);
-      throw error;
-    }
-  };
-
-  const signIn = async (email: string, password: string) => {
-    try {
-      const auth = getAuth(app);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = await mapUserCredentialToUser(userCredential);
-      setUser(user);
-      return user;
-    } catch (error) {
-      console.error("Error signing in:", error);
-      throw error;
-    }
-  };
-
-  const signInWithProvider = async (providerName: string) => {
-    const providerData = ALL_PROVIDERS.find((provider) => provider.name === providerName);
-    if (!providerData) throw new Error("Invalid provider");
-
-    const provider = new providerData!.providerMethod!();
-    try {
-      const auth = getAuth(app);
-      const userCredential = await signInWithPopup(auth, provider);
-      const user = await mapUserCredentialToUser(userCredential);
-      setUser(user);
-      return user;
-    } catch (error) {
-      console.error("Error signing in with provider:", error);
-      throw error;
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      const auth = getAuth(app);
-      await auth.signOut();
-      setUser(null);
-    } catch (error) {
-      console.error("Error signing out:", error);
-      throw error;
-    }
-  };
 
   useEffect(() => {
     try {
       const auth = getAuth(app);
+      setAuth(auth);
       const unsubscribe = onAuthStateChanged(auth, async (_user) => {
         if (_user) {
           const user = await mapUserCredentialToUser({ user: _user } as UserCredential);
@@ -111,6 +60,68 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.error("Error setting up auth state change:", error);
     }
   }, []);
+
+  const signUp = useMemo(
+    () => async (email: string, password: string) => {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth!, email, password);
+        const user = await mapUserCredentialToUser(userCredential);
+        setUser(user);
+        return user;
+      } catch (error) {
+        console.error("Error signing up:", error);
+        throw error;
+      }
+    },
+    [auth]
+  );
+
+  const signIn = useMemo(
+    () => async (email: string, password: string) => {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth!, email, password);
+        const user = await mapUserCredentialToUser(userCredential);
+        setUser(user);
+        return user;
+      } catch (error) {
+        console.error("Error signing in:", error);
+        throw error;
+      }
+    },
+    [auth]
+  );
+
+  const signInWithProvider = useMemo(
+    () => async (providerName: string) => {
+      const providerData = ALL_PROVIDERS.find((provider) => provider.name === providerName);
+      if (!providerData) throw new Error("Invalid provider");
+
+      const provider = new providerData!.providerMethod!();
+      try {
+        const userCredential = await signInWithPopup(auth!, provider);
+        const user = await mapUserCredentialToUser(userCredential);
+        setUser(user);
+        return user;
+      } catch (error) {
+        console.error("Error signing in with provider:", error);
+        throw error;
+      }
+    },
+    [auth]
+  );
+
+  const signOut = useMemo(
+    () => async () => {
+      try {
+        await auth?.signOut();
+        setUser(null);
+      } catch (error) {
+        console.error("Error signing out:", error);
+        throw error;
+      }
+    },
+    [auth]
+  );
 
   return (
     <AuthContext.Provider value={{ user, signUp, signIn, signInWithProvider, signOut }}>
