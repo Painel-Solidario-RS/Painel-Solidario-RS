@@ -30,7 +30,7 @@ const ButtonForm: React.FC<ButtonFormProps> = ({ content }) => {
       <Button
         sx={{
           padding: '0 16px',
-          width: '328px',
+          width: '100%',
           height: '48px',
           borderRadius: '8px',
           marginBottom: 1,
