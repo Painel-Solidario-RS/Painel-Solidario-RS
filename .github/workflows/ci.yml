@@ -157,7 +157,6 @@ jobs:
     runs-on: [self-hosted, production, painel-solidario-rs]
     needs: [test-api, test-web, build-containers]
     if: github.ref == 'refs/heads/production'
-    # if: ${{ always() && !failure() && !cancelled() }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -178,3 +177,5 @@ jobs:
           POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ vars.POSTGRES_PORT }}
           NODE_ENV: ${{ vars.NODE_ENV }}
+          JWT_SECRET: ${{ vars.JWT_SECRET }}
+          JWT_EXPIRATION: ${{ vars.JWT_EXPIRATION }}
