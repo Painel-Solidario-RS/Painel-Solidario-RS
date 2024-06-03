@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Address } from 'src/address/entities/address.entity';
 import {
   Column,
@@ -83,19 +84,36 @@ export class PersonShifts {
  */
 @Entity()
 export class Person {
+  @ApiProperty({ example: 1, description: 'ID da pessoa' })
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
+  @ApiProperty({
+    example: 'João da Silva',
+    description: 'Nome',
+  })
   name: string;
 
   @Column()
+  @ApiProperty({
+    example: 'pessoa@mail.com',
+    description: 'E-mail',
+  })
   email: string;
 
   @Column()
+  @ApiProperty({
+    example: '(51) 99999-9999',
+    description: 'Telefone',
+  })
   phone: string;
 
   @Column()
+  @ApiProperty({
+    example: false,
+    description: 'Se a pessoa já está alocada',
+  })
   allocated: boolean;
 
   @ManyToOne(() => PersonEmployment, (employment) => employment.people, {
