@@ -67,39 +67,33 @@ export class PersonService {
       volunteerCategoryIds,
       activityIds,
       shiftIds,
-      address,
+      address: newAddress,
       ...rest
     } = data;
-
-    //
-    // TODO(Perin): Implement this logic to save/update/delete address
-    //
-    // const { address: currentAddress } = await this.personRepo.findOne({
-    //   where: { id },
-    //   relations: ['address'],
-    // });
-
-    // if (!currentAddress && address) {
-    //   // Person doesn't have an address and we get one, so we create it
-    //   const personAddress = await this.addressRepo.save(
-    //     this.addressRepo.create(address),
-    //   );
-    //   person.address = personAddress;
-    // } else if (currentAddress && !address) {
-    //   // Person has an address and we don't get one, so we remove it
-    //   await this.addressRepo.delete({ id: currentAddress.id });
-    // } else if (currentAddress && address) {
-    //   // Person has an address and we get one, so we update it
-    //   await this.addressRepo.update(currentAddress.id, {
-    //     ...currentAddress,
-    //     ...address,
-    //   });
-    // }
 
     const [person, relatedEntities] = await Promise.all([
       this.findPersonById(id),
       this.loadDtoRelatedEntities(data),
     ]);
+
+    const { address: currentAddress } = person;
+
+    if (!currentAddress && newAddress) {
+      // Person doesn't have an address and we get one, so we create it
+      const personAddress = await this.addressRepo.save(
+        this.addressRepo.create(newAddress),
+      );
+      person.address = personAddress;
+    } else if (currentAddress && !newAddress) {
+      // Person has an address and we don't get one, so we remove it
+      await this.addressRepo.delete({ id: currentAddress.id });
+    } else if (currentAddress && newAddress) {
+      // Person has an address and we get one, so we update it
+      await this.addressRepo.update(currentAddress.id, {
+        ...currentAddress,
+        ...newAddress,
+      });
+    }
 
     const personWithNewData = {
       ...person,
