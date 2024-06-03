@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import * as admin from 'firebase-admin';
 import * as Crypto from 'crypto';
 import { CONSTANTS } from 'src/database/constants';
 import { Person } from 'src/person/entities/person.entity';
@@ -24,10 +25,30 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {
     this.cryptoSecret = this.configService.getOrThrow<string>('CRYPTO_SECRET');
+
+    const firebaseCredentials = this.configService.get<string>(
+      'FIREBASE_ADMIN_CREDENTIALS_JWT',
+    );
+
+    if (firebaseCredentials) {
+      const credentials = jwtService.decode(firebaseCredentials);
+      admin.initializeApp({
+        credential: admin.credential.cert(credentials),
+      });
+    } else {
+      throw new Error('Firebase Admin credentials are not defined');
+    }
   }
 
   public async verifyToken(token: string): Promise<JwtPayload> {
-    return this.jwtService.verifyAsync(token);
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const { email, name } = decodedToken;
+      return { email, name };
+    } catch (error) {
+      console.error(error);
+      throw new UnauthorizedException('Invalid Token.');
+    }
   }
 
   public async createUser(personId: number, password: string): Promise<void> {
@@ -38,6 +59,14 @@ export class AuthService {
       passwordSalt,
       password: cryptographedPassword,
       person,
+    });
+
+    // Create Firebase user
+    await admin.auth().createUser({
+      uid: person.id.toString(),
+      email: person.email,
+      password,
+      displayName: person.name,
     });
   }
 
@@ -67,7 +96,9 @@ export class AuthService {
       name: person.name,
     };
 
-    const token = this.jwtService.sign(payload);
+    const token = await admin
+      .auth()
+      .createCustomToken(person.id.toString(), payload);
     return {
       token,
       payload,

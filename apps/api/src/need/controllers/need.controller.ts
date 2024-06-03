@@ -16,7 +16,8 @@ import { FindNeedDto } from '../dtos/find-need.dto';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { CreateNeedDTO } from '../dtos/create-need.dto';
 import { UpdateNeedDTO } from '../dtos/update-need.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Necessidades')
 @Controller('need')
 export class NeedController {
   public constructor(

@@ -13,6 +13,9 @@ Backend do projeto Painel Solidário RS.
 - Executar a instalação dos pacotes: `npm i`
 - Executar em modo de desenvolvimento: `npm run start:dev`
 
+## Documentação
+- A documentação da API foi feita utilizando Swagger/OpenAPI, e pode ser acessada em `http://localhost:4000/api-docs` após a execução do projeto.
+
 ## Executando o banco localmente para desenvolvimento
 
 - Acessar a raíz do projeto.
@@ -24,7 +27,6 @@ Backend do projeto Painel Solidário RS.
 - Acessar a raíz do projeto.
 - Criar um arquivo `.env` nessa pasta, conforme a estrutura do `.env.sample`: `cp .env.sample .env`.
 - Iniciar executar o docker-compose para subir o banco localmente com `docker-compose up -d`. Caso não exista `docker-compose` na máquina, utilizar `docker compose up -d`.
-
 
 ## Migrations
 

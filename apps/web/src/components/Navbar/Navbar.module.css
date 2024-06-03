@@ -1,0 +1,19 @@
+.container {
+  height: 50px;
+  padding: 0 20px;
+  width: calc(100% - 40px);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border-bottom: 1px solid #0002;
+}
+
+.icon {
+  width: 30px;
+}
+
+.title {
+    text-align: center;
+}

@@ -3,6 +3,8 @@ FROM node:20-alpine as builder
 
 ENV NODE_ENV build
 
+RUN apk add --no-cache python3 make g++
+
 USER node
 WORKDIR /home/node
 

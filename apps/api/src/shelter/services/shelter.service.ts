@@ -14,7 +14,7 @@ import { ShelterSelectQueryBuilder } from './shelter-select-query.builder';
 @Injectable()
 export class ShelterService {
   public constructor(
-    @Inject(CONSTANTS.REPOSITORY.SHELTERS)
+    @Inject(CONSTANTS.REPOSITORY.SHELTER)
     private readonly shelterRepository: Repository<Shelter>,
     @Inject(CONSTANTS.REPOSITORY.ADDRESS)
     private readonly addressRepository: Repository<Address>,

@@ -3,7 +3,7 @@
 import { options, services } from '../fixtures/services.json'
 
 describe('Home Page', () => {
-  beforeEach(() => cy.visit('/home'))
+  beforeEach(() => cy.visit('/dashboard'))
 
   options.forEach((o) => {
     it.skip(`should display ${o.name} option`, () => {
