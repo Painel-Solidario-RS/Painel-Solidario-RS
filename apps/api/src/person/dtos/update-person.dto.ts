@@ -12,18 +12,22 @@ import {
 import { UpdatePersonAddressDTO } from './update-person-entities.dto';
 
 export class UpdatePersonDTO {
+  @IsOptional()
   @MinLength(6)
   @IsString()
-  public name: string;
+  public name?: string;
 
+  @IsOptional()
   @IsEmail()
-  public email: string;
+  public email?: string;
 
+  @IsOptional()
   @IsString()
-  public phone: string;
+  public phone?: string;
 
+  @IsOptional()
   @IsBoolean()
-  public allocated: boolean;
+  public allocated?: boolean;
 
   @IsOptional()
   @IsPositive()
@@ -47,8 +51,8 @@ export class UpdatePersonDTO {
   @IsPositive({ each: true })
   public shiftIds?: number[];
 
+  @IsOptional()
   @Type(() => UpdatePersonAddressDTO)
   @IsObject()
-  @IsOptional()
   public address?: UpdatePersonAddressDTO;
 }
