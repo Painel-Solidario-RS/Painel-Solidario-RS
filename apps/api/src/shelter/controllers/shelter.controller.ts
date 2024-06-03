@@ -16,7 +16,9 @@ import { FindShelterDto } from '../dtos/find-shelter.dto';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { CreateShelterDTO } from '../dtos/create-shelter.dto';
 import { UpdateShelterDTO } from '../dtos/update-shelter.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Abrigos')
 @Controller('shelter')
 export class ShelterController {
   public constructor(
