@@ -105,7 +105,7 @@ export class PersonService {
       ...person,
       ...relatedEntities,
       ...rest,
-    }
+    };
 
     await this.personRepo.save([personWithNewData]);
 
