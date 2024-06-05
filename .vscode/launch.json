@@ -6,18 +6,16 @@
   "configurations": [
     {
       "command": "npm run start:dev",
-      "name": "Run npm start",
+      "name": "Launch API in dev mode",
       "request": "launch",
       "type": "node-terminal",
-      "cwd": "${workspaceFolder}/app"
+      "cwd": "${workspaceFolder}/apps/api/"
     },
     {
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "program": "${file}"
     }
   ]

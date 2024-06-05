@@ -35,6 +35,9 @@ services:
       traefik.http.services.api.loadbalancer.server.port: 4000
       traefik.http.routers.api.service: api
       traefik.http.routers.api.rule: PathPrefix(`/api`)
+      traefik.http.routers.api.middlewares: api-stripprefix
+      traefik.http.middlewares.api-stripprefix.stripprefixregex.regex: \/api\/
+
     # env_file:
     #   - ./apps/api/.env
     environment:
@@ -46,6 +49,8 @@ services:
       NODE_ENV: "${NODE_ENV}"
       JWT_SECRET: "${JWT_SECRET}"
       JWT_EXPIRATION: "${JWT_EXPIRATION}"
+      CRYPTO_SECRET: "${CRYPTO_SECRET}"
+      FIREBASE_ADMIN_CREDENTIALS_JWT: "${FIREBASE_ADMIN_CREDENTIALS_JWT}"
 
   psql:
     image: postgres # this uses the 'latest' version

@@ -14,9 +14,12 @@ export const databaseFactory = (configService: ConfigService) => {
     database: configService.getOrThrow<string>('POSTGRES_DB'),
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     synchronize: isDevEnvironment,
-    ssl: {
-      rejectUnauthorized: !isDevEnvironment,
-    },
+    ssl:
+      configService.get<string>('POSTGRES_USE_SSL') === 'true'
+        ? {
+            rejectUnauthorized: !isDevEnvironment,
+          }
+        : false,
   });
 
   return dataSource.initialize();

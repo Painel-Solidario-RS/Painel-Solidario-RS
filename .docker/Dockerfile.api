@@ -34,4 +34,4 @@ COPY --from=builder --chown=node:node /home/node/apps/api/dist/ ./dist/
 EXPOSE 4000
 EXPOSE 80
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
