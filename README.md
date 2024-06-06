@@ -15,7 +15,7 @@ Após criar e preencher o arquivo `.env`, basta executar o comando `docker compo
 - **traefik**: `http://localhost:8080` - Load Balancer
 
 **Funcionamento do Load Balancer**
-As requisições enviadas para [http://localhost:8080**/api/**](http://localhost:8080/api/) serão redirecionadas para a API. Todas as demais irão para a aplicação WEB.
+As requisições enviadas para http://localhost:8080/api/ serão redirecionadas para a API. Todas as demais irão para a aplicação WEB.
 
 ## Execução local sem Docker
 
