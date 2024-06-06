@@ -8,8 +8,8 @@ services:
       dockerfile: .docker/Dockerfile.web
       context: .
     restart: unless-stopped
-    # ports:
-    #   - 3000:3000
+    ports:
+      - 3000:3000
     depends_on:
       - traefik
     labels:
@@ -23,8 +23,8 @@ services:
     build:
       dockerfile: .docker/Dockerfile.api
       context: .
-    # ports:
-    #   - 4000:4000
+    ports:
+      - 4000:4000
     depends_on:
       - traefik
       - psql
@@ -38,8 +38,6 @@ services:
       traefik.http.routers.api.middlewares: api-stripprefix
       traefik.http.middlewares.api-stripprefix.stripprefixregex.regex: \/api\/
 
-    # env_file:
-    #   - ./apps/api/.env
     environment:
       POSTGRES_USER: "${POSTGRES_USER}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
