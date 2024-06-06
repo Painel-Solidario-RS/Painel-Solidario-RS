@@ -27,9 +27,9 @@ services:
     #   - 4000:4000
     depends_on:
       - traefik
-    # - psql
-    # links:
-    #   - psql
+      - psql
+    links:
+      - psql
     labels:
       traefik.enable: true
       traefik.http.services.api.loadbalancer.server.port: 4000
@@ -53,11 +53,11 @@ services:
       FIREBASE_ADMIN_CREDENTIALS_JWT: "${FIREBASE_ADMIN_CREDENTIALS_JWT}"
 
   psql:
-    image: postgres # this uses the 'latest' version
+    image: postgres:16.3
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres # only do this in development
-      POSTGRES_DB: app
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
     volumes:
       - psql:/var/lib/postgresql/data # save data between restarts
       - ./psql_init:/docker-entrypoint-initdb.d
@@ -69,6 +69,6 @@ services:
     command:
       - --providers.docker=true
     ports:
-      - 3000:80
+      - 8080:80
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
