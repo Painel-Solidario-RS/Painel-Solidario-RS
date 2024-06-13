@@ -31,12 +31,14 @@ export class AuthService {
     );
 
     if (firebaseCredentials) {
-      const credentials = jwtService.decode(firebaseCredentials);
       admin.initializeApp({
-        credential: admin.credential.cert(credentials),
+        credential: admin.credential.cert(
+          jwtService.decode(firebaseCredentials),
+        ),
       });
     } else {
-      throw new Error('Firebase Admin credentials are not defined');
+      if (configService.getOrThrow<string>('NODE_ENV') !== 'development')
+        throw new Error('Firebase Admin credentials are not defined');
     }
   }
 

@@ -173,7 +173,9 @@ export class PersonService {
 
     return this.personRepo.create({
       ...rest,
-      employment: this.employmentRepo.create({ id: employmentId }),
+      employment: employmentId
+        ? this.employmentRepo.create({ id: employmentId })
+        : undefined,
       categories: volunteerCategoryIds?.map((id) =>
         this.categoryRepo.create({ id: id }),
       ),

@@ -1,5 +1,37 @@
 # Painel Solidário RS
 
+## Execução local com Docker para desenvolvimento
+
+É possível executar o projeto localmente utilizando Docker.
+Para isso, basta criar um arquivo `.env` na raiz do projeto contendo as variáveis de ambiente de cada aplicação.
+- As variáveis podem ser consultadas nos `.env.sample` de cada aplicação, links abaixo:
+  - [Backend](./apps/api/.env.sample)
+  - [Frontend](./apps/web/.env.sample)
+
+Após criar e preencher o arquivo `.env`, basta executar o comando `docker compose up` na raiz do projeto para subir as aplicações:
+- **api**: `http://localhost:4000` - Backend
+- **web**: `http://localhost:3000` - Frontend
+- **psql**: `localhost:5432` - Banco de dados
+- **traefik**: `http://localhost:8080` - Load Balancer
+
+**Funcionamento do Load Balancer**
+As requisições enviadas para http://localhost:8080/api/ serão redirecionadas para a API. Todas as demais irão para a aplicação WEB.
+
+## Execução local sem Docker
+
+Para executar o projeto localmente sem Docker, é necessário executar as aplicações separadamente.
+Para isso, basta seguir os passos de instalação e execução de cada aplicação:
+- [Backend](./apps/api/README.md)
+- [Frontend](./apps/web/README.md)
+
+Também é possível utilizar o docker para rodar apenas parte dos módulos enquanto desenvolve outro. Para isso, é só passar o nome dos módulos que deseja executar, separado por espaço. Exemplo:
+
+- Rodar o banco de dados + WEB: `docker compose up psql web`
+- Rodar o banco de dados + API + Load Balancer: `docker compose up psql api traefik`
+
+## Documentação
+
+A documentação da API foi feita utilizando Swagger/OpenAPI, e pode ser acessada em `http://localhost:4000/api-docs` após a execução do projeto.
 
 ## Turborepo
 
