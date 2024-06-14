@@ -163,10 +163,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Starts application
-        run: |
-          docker compose up --build -d
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          files: 'docker-compose.yml'
+          tokenPrefix: "${"
+          tokenSuffix: "}"
         env:
+          APP_DB_PASSWORD:  ${{ vars.APP_DB_PASSWORD }}
+          APP_DB_USERNAME:  ${{ vars.APP_DB_USERNAME }}
           POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_DB: ${{ vars.POSTGRES_DB }}
@@ -181,3 +185,7 @@ jobs:
           VITE_FIREBASE_PUBLIC_API_KEY : ${{ vars.VITE_FIREBASE_PUBLIC_API_KEY }}
           VITE_FIREBASE_PUBLIC_AUTH_DOMAIN : ${{ vars.VITE_FIREBASE_PUBLIC_AUTH_DOMAIN }}
           VITE_FIREBASE_PUBLIC_PROJECT_ID : ${{ vars.VITE_FIREBASE_PUBLIC_PROJECT_ID }}
+
+      - name: Starts application
+        run: |
+          docker compose up --build -d
