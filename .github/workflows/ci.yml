@@ -163,15 +163,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Docker Compose - Update Web
+      - name: Starts application
         run: |
-          docker compose up --build -d web
-
-      - name: Docker Compose - Update API
-        run: |
-          docker compose up --build -d api
+          docker compose up --build -d
         env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ vars.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ vars.POSTGRES_USER }}
           POSTGRES_DB: ${{ vars.POSTGRES_DB }}
           POSTGRES_HOST: ${{ vars.POSTGRES_HOST }}
@@ -179,3 +175,9 @@ jobs:
           NODE_ENV: ${{ vars.NODE_ENV }}
           JWT_SECRET: ${{ vars.JWT_SECRET }}
           JWT_EXPIRATION: ${{ vars.JWT_EXPIRATION }}
+          CRYPTO_SECRET: ${{ vars.CRYPTO_SECRET }}
+          FIREBASE_ADMIN_CREDENTIALS_JWT: ${{ vars.FIREBASE_ADMIN_CREDENTIALS_JWT }}
+          VITE_API_URL : ${{ vars.VITE_API_URL }}
+          VITE_FIREBASE_PUBLIC_API_KEY : ${{ vars.VITE_FIREBASE_PUBLIC_API_KEY }}
+          VITE_FIREBASE_PUBLIC_AUTH_DOMAIN : ${{ vars.VITE_FIREBASE_PUBLIC_AUTH_DOMAIN }}
+          VITE_FIREBASE_PUBLIC_PROJECT_ID : ${{ vars.VITE_FIREBASE_PUBLIC_PROJECT_ID }}
