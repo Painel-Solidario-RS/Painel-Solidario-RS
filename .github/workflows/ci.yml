@@ -185,7 +185,10 @@ jobs:
           VITE_FIREBASE_PUBLIC_API_KEY : ${{ vars.VITE_FIREBASE_PUBLIC_API_KEY }}
           VITE_FIREBASE_PUBLIC_AUTH_DOMAIN : ${{ vars.VITE_FIREBASE_PUBLIC_AUTH_DOMAIN }}
           VITE_FIREBASE_PUBLIC_PROJECT_ID : ${{ vars.VITE_FIREBASE_PUBLIC_PROJECT_ID }}
+          VITE_FIREBASE_PUBLIC_PROJECT_ID : ${{ vars.VITE_FIREBASE_PUBLIC_PROJECT_ID }}
 
       - name: Starts application
         run: |
           docker compose up --build -d
+        env:
+
