@@ -1,16 +1,18 @@
-import { Card } from "../../components/Card/Card";
-import { Header } from "../../components/Header/Header";
-import { Container, Grid } from "@mui/material";
-import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import NightShelterIcon from "@mui/icons-material/NightShelter";
-import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
-import FeedIcon from "@mui/icons-material/Feed";
+import { Card } from '../../components/Card/Card'
+import { Header } from '../../components/Header/Header'
+import { Container, Grid } from '@mui/material'
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism'
+import NightShelterIcon from '@mui/icons-material/NightShelter'
+import HelpOutlinedIcon from '@mui/icons-material/HelpOutlined'
+import FeedIcon from '@mui/icons-material/Feed'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <div>
       <Header></Header>
-      <Container sx={{ marginTop: "10px", padding: "0" }}>
+      <Container sx={{ marginTop: '10px', padding: '0' }}>
         <Grid sx={{ flexGrow: 1 }} container justifyContent="center">
           <Grid item>
             <Card
@@ -20,13 +22,13 @@ function Home() {
               icon={
                 <VolunteerActivismIcon
                   sx={{
-                    fontSize: "1.5rem",
-                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1.5rem',
+                    color: theme => theme.palette.primary.main
                   }}
                 />
               }
               onClick={function (): void {
-                console.log("Function not implemented.");
+                console.log('Function not implemented.')
               }}
             />
           </Grid>
@@ -38,13 +40,13 @@ function Home() {
               icon={
                 <NightShelterIcon
                   sx={{
-                    fontSize: "1.5rem",
-                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1.5rem',
+                    color: theme => theme.palette.primary.main
                   }}
                 />
               }
               onClick={function (): void {
-                console.log("Function not implemented.");
+                console.log('Function not implemented.')
               }}
             />
           </Grid>
@@ -56,13 +58,13 @@ function Home() {
               icon={
                 <HelpOutlinedIcon
                   sx={{
-                    fontSize: "1.5rem",
-                    color: (theme) => theme.palette.primary.main,
+                    fontSize: '1.5rem',
+                    color: theme => theme.palette.primary.main
                   }}
                 />
               }
               onClick={function (): void {
-                console.log("Function not implemented.");
+                console.log('Function not implemented.')
               }}
             />
           </Grid>
@@ -71,16 +73,16 @@ function Home() {
               title="Gestão"
               description="Cadastrar abrigos e gerenciar elementos"
               size={170}
-              icon={<FeedIcon sx={{ fontSize: "1.5rem", color: "#006400" }} />}
+              icon={<FeedIcon sx={{ fontSize: '1.5rem', color: '#006400' }} />}
               onClick={function (): void {
-                console.log("Function not implemented.");
+                navigate('/shelter')
               }}
             />
           </Grid>
         </Grid>
       </Container>
     </div>
-  );
+  )
 }
 
-export { Home };
+export { Home }

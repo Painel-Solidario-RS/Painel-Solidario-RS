@@ -17,35 +17,47 @@ import SearchSharpIcon from '@mui/icons-material/SearchSharp'
 import ButtonForm from '../../components/ButtonForm/ButtonForm'
 import TextArea from '../../components/TextArea/TextArea'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import useApi from '../../hooks/useApi'
 
 interface ItemsProps {
   key: string | number
   value: string
 }
 
+interface ShelterData {
+  address: number
+  name: string
+  capacity: number
+  contact: string
+  type: 'PERSON' | 'PET'
+}
+
 function Shelter() {
   const navigate = useNavigate()
+  const [name, setName] = useState('')
+  const [totalCapacity, setTotalCapacity] = useState(0)
   const [placeTips, setPlaceTips] = useState<ItemsProps[]>([])
   const [selectedPlace, setSelectedPlace] = useState('')
   const [selectedPublic, setSelectedPublic] = useState('')
 
-  useEffect(() => {
-    axios
-      .get<string[]>('https://enderecos.metheora.com/api/logradouros/tipos')
-      .then(response => {
-        const tips: ItemsProps[] = response.data.map(
-          (nome: string, index: number) => ({
-            key: index,
-            value: nome
-          })
-        )
-        setPlaceTips(tips)
-      })
-      .catch(error => {
-        console.error('Error fetching place tips:', error)
-      })
-  }, [])
+  const [submitData, setSubmitData] = useState<ShelterData | null>(null)
+  const { response, error, loading } = useApi<ShelterData, ShelterData>({
+    url: '/shelter',
+    method: 'POST',
+    body: submitData
+  })
+
+  const handleEnviarDadosDoAbrigo = () => {
+    const shelterData: ShelterData = {
+      address: 0,
+      capacity: totalCapacity,
+      contact: '',
+      name: name,
+      type: 'PERSON'
+    }
+
+    setSubmitData(shelterData)
+  }
 
   const handleChangePlace = (event: SelectChangeEvent<string>) => {
     const selectedPlaceValue = event.target.value
@@ -67,9 +79,11 @@ function Shelter() {
     { key: '2', value: 'Publico 2' },
     { key: '3', value: 'Publico 3' }
   ]
+
   const goToHome = () => {
     navigate('/home')
   }
+
   const stylesInput = {
     flexDirection: 'column',
     display: 'flex',
@@ -97,6 +111,9 @@ function Shelter() {
       >
         {/* nome */}
         <Input
+          name="name"
+          onChange={e => setName(e.target.value)}
+          value={name}
           label="Nome"
           placeholder="Nome e Sobrenome"
           sxInput={stylesInput}
@@ -175,6 +192,7 @@ function Shelter() {
         />
         {/* Endereço (logradouro) */}
         <Input
+          name="address"
           label="Endereço (logradouro)"
           placeholder="Ex. 7100000"
           sxInput={stylesInput}
@@ -198,9 +216,11 @@ function Shelter() {
       <div className="shelter-info-fields">
         {/* Capacidade Total */}
         <Input
+          name="totalCapacity"
           label="Capacidade Total"
           placeholder="Quantidade de pessoas"
           sxInput={stylesInput}
+          value={totalCapacity}
         />
         {/* Número de vagas disponíveis */}
         <Input
@@ -223,9 +243,8 @@ function Shelter() {
           text="Voltar"
         />
         <GreenButton
-          onClick={() => {
-            goToHome()
-          }}
+          type="submit"
+          onClick={handleEnviarDadosDoAbrigo}
           text="Cadastrar"
         />
       </div>

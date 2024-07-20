@@ -1,5 +1,7 @@
+import { Button } from '@mui/material'
 import BackArrowHeader from '../icons/BackArrowHeader'
 import './BasePage.css'
+import { useNavigate } from 'react-router-dom'
 
 interface BasePageProps {
   title: string
@@ -24,11 +26,22 @@ const BasePage: React.FC<BasePageProps> = ({
   rightIcon = null,
   children
 }) => {
+  const navigate = useNavigate()
+
+  const handleGoBack = () => {
+    navigate(-1) // Volta para a página anterior
+  }
   return (
     <div className="base-page-container">
       <div className="base-page-title-container">
         <div className="base-page-left-icon">
-          {leftIcon ? <BackArrowHeader /> : ''}
+          {leftIcon ? (
+            <Button onClick={handleGoBack}>
+              <BackArrowHeader />
+            </Button>
+          ) : (
+            ''
+          )}
         </div>
         <div className="base-page-title dark-base-color">{title}</div>
         <div className="base-page-right-icon">

@@ -1,5 +1,9 @@
 {
 	"cSpell.words": [
 		"metatype"
+	],
+	"DockerRun.DisableDockerrc": true,
+	"DockerRun.Containers": [
+		"5801e560ba88"
 	]
 }

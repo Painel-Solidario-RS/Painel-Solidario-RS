@@ -13,7 +13,7 @@ type InputProps = {
   label: string
   placeholder: string
   name?: string
-  value?: string
+  value?: string | number
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   error?: boolean
   helperText?: string
@@ -22,7 +22,14 @@ type InputProps = {
   sxInput?: SxProps | undefined
 }
 
-const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
+const Input: React.FC<InputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChange,
+  icon,
+  sxInput
+}) => {
   return (
     <Box sx={sxInput}>
       <FormControl
@@ -49,6 +56,8 @@ const Input: React.FC<InputProps> = ({ label, placeholder, icon, sxInput }) => {
         <InputBase
           id="outlined-multiline-flexible"
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           sx={{
             padding: '0 16px',
             width: '328px',
